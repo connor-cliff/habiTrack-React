@@ -47,6 +47,7 @@ const Home = () => {
                         <Text style={styles.headerTitle}>Habits</Text>
                         <TouchableOpacity>
                         {/*doesnt currently work and im not sure if i should include it*/}
+                        {/* test commit 2 */}
                             <Text styles={styles.headerBtn}>Sort A-Z</Text>
                         </TouchableOpacity>
                     </View>
