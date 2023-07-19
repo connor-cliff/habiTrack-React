@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   habitContainer: {
-    marginTop: SIZES.xLarge,
+    marginTop: SIZES.medium,
     height: "100%"
   },
   menuIcon: {
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     width: "100%",
+
   },
   userName: {
     fontFamily: FONT.regular,
@@ -38,6 +39,13 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xLarge,
     color: COLORS.primary,
     marginTop: 2,
+  },
+  text : {
+    fontFamily: FONT.bold,
+    fontSize: SIZES.xLarge,
+    color: COLORS.primary,
+    marginTop: 10,
+    textAlign: "center"
   },
   header: {
     flexDirection: "row",

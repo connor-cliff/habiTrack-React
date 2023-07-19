@@ -27,7 +27,7 @@ const Login = () => {
                 <ScrollView showsVerticalScrollIndicator={false}> 
                  <View style={styles.pageContainer}>
                   <View style={styles.container}>
-                    <Text style={styles.habitTracker}>Habit Tracker</Text>
+                    <Text style={styles.habitTracker}>HabiTrack</Text>
                     <Text style={styles.title}>Login</Text>
                   </View>
 

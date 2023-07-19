@@ -7,16 +7,28 @@ import { COLORS, icons, SIZES } from '../../constants';
 import styles from "../habits/habits.style";
 
 
-const EditHabit = () => {
-  const params = useSearchParams();
-  const router = useRouter();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [streak, setStreak] = useState("");
+const AddHabit = ({}) => {
 
-  const data = null;
-  const isLoading = false;
-  const error = null;
+  //const { refreshHabits } = route.params;
+  const router = useRouter();
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [icon, setIcon] = useState('');
+  const [reminder, setReminder] = useState('');
+  const streak = 0;
+
+  const handleNavigate = () =>{
+    const habit = { name, description, reminder, streak }
+
+    // Save data to the database
+    fetch("http://localhost:8080/api/v1/habit",{
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(habit)
+    })
+
+    router.push('/');
+};
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -55,7 +67,7 @@ const EditHabit = () => {
                       </View>
                     </View>
                   </View>
-
+                  
                   <View>
                     <View>
                       <Text style={styles.fieldName}>Description</Text>
@@ -73,44 +85,41 @@ const EditHabit = () => {
 
                   <View>
                     <View>
-                      <Text style={styles.fieldName}>Streak</Text>
+                      <Text style={styles.fieldName}>Reminder</Text>
                     </View>
+                    <View>
                     <View style={styles.inputContainer}>
                       <View style={styles.inputWrapper}>
                         <TextInput
-                          style={styles.userInput}
-                          value={streak}
-                          onChangeText={(text) => setStreak(text)}
-                          keyboardType='numeric'
-                        />
+                            style={styles.userInput}
+                            placeholder="HH:mm"
+                            value={reminder}
+                            onChangeText={(text) => setReminder(text)}
+                          />
                       </View>
+                    </View>
                     </View>
                   </View>
 
-                  <View>
+                  {/* <View>
                     <View>
                       <Text style={styles.fieldName}>Icon</Text>
                     </View>
                     <View style={styles.iconInputContainer}>
-                      <IconSelection />
+                      <IconSelection icon={icon} setIcon={setIcon}/>
                     </View>
                   </View>
+                  {/* Add one more icon and display as two rows of four */}
 
-                  <View>
-                    <View>
-                      <Text style={styles.fieldName}>Reminder</Text>
-                    </View>
-                    <View>
-                    <Reminder />
-                    </View>
-                  </View>
-
-                </View>
+                </View> 
               
-              <Footer icon={"Complete"} handleNavigate={() => router.push('/')}/>
+              <Footer 
+              icon={"Complete"} 
+              handleNavigate={handleNavigate}
+              />
             </>
     </SafeAreaView>
   )
 }
 
-export default EditHabit;
+export default AddHabit;

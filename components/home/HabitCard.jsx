@@ -1,13 +1,21 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import { useCallBack, useState } from 'react';
 
 import styles from "./habitcard.style";
 import { icons } from "../../constants";
 
-const HabitCard = ({ handleNavigate }) => {
-  const addOneDay = () => {
-    console.log("Streak + 1")
-  }
+const HabitCard = ({ habit, handleNavigate }) => {
 
+  const handleButtonPress = () => {
+    // Update the streak 
+    const newStreak = habit.streak + 1;
+
+    fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?streak=${newStreak}`, {
+      method: "PUT",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ streak: newStreak })
+    })
+};
 
   return (
     <TouchableOpacity style={styles.container} onPress={handleNavigate}>
@@ -21,14 +29,15 @@ const HabitCard = ({ handleNavigate }) => {
 
       <View style={styles.textContainer}>
         <Text style={styles.habitName} numberOfLines={1}>
-          Habit name
+          {habit.name}
         </Text>
-        <Text style={styles.streak}>Streak - 0</Text>
+        <Text style={styles.streak}>Score - {habit.streak}</Text>
       </View>
 
       <View >
         <View style={styles.iconPosition}>
-          <TouchableOpacity style={styles.btn} onPress={addOneDay}>
+        {/* this button should just increment and not take the user anywhere  */}
+          <TouchableOpacity style={styles.btn} onPress={handleButtonPress}>
             <Image
               source={icons.plus}
               resizeMode='contain'

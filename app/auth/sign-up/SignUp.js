@@ -27,14 +27,13 @@ const SignUp = () => {
                         dimension={"70%"}
                         handlePress={() => router.back()}
                     />
-                ),
-                }}
+                ),}}
             />
             <>
                 <ScrollView showsVerticalScrollIndicator={false}> 
                  <View style={styles.pageContainer}>
                   <View style={styles.container}>
-                    <Text style={styles.habitTracker}>Habit Tracker</Text>
+                    <Text style={styles.habitTracker}>HabiTrack</Text>
                     <Text style={styles.title}>Sign Up</Text>
                   </View>
 

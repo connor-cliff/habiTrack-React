@@ -1,8 +1,15 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 
 import styles from "./footer.style";
 
-const Footer = ({ icon, handleNavigate }) => {
+const Footer = ({ icon, handleNavigate}) => {
+
+  // const handlePress = () => {
+  //   handleNavigate();
+  //   refreshHabits();
+  // };
+
+
   return (
     <TouchableOpacity style={styles.container} onPress={handleNavigate}>
       <View style={styles.iconPosition}>

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: SIZES.medium,
     height: "100%",
-    marginRight: 15
+    //marginRight: 15
   },
   userInput: {
     fontFamily: FONT.regular,

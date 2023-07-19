@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, TouchableOpacity, View, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { icons } from '../../../constants';
 import styles from './iconselection.style';
 
-const IconSelection = () => {
+const IconSelection = ({ icon, setIcon }) => {
   const router = useRouter();
 
   const data = [

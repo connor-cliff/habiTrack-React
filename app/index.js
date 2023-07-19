@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, ScrollView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, ScrollView, SafeAreaView, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 
 import styles from "./index.style";
@@ -7,17 +7,51 @@ import { COLORS, icons, SIZES } from '../constants';
 import { HabitCard, Footer, ScreenHeaderBtn } from '../components';
 
 const Home = () => {
+
+    // do i need these?
     const router = useRouter();
     const isLoading = false;
     const error = false;
-    const [searchTerm, setSearchTerm] = useState("")
 
-    const [selectedHabit, setSelectedHabit] = useState()
+    const [habits, setHabits] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
-    const handleCardPress = (item) => {
-        router.push(`/habits/${item.habit_id}`);
-        setSelectedHabit(item.habit_id);
-    };
+    /**
+     * this refresh works on its own so now i need to just figure out a way to pass it to the footer button
+     *  */ 
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        
+        fetch("http://localhost:8080/api/v1/habit")
+          .then(res => res.json())
+          .then(result => {
+            setHabits(result);
+            setRefreshing(false);
+          })
+          .catch(error => {
+            console.error("Error refreshing data:", error);
+            setRefreshing(false);
+          });
+      };
+      
+
+    //   const handleCardPress = (habit) => {
+    //     console.log(habit);
+    //     console.log(habit.habitId);
+    //     console.log("--------");
+    //     router.push(`/habits/${habit.habitId}`);
+    //   };
+      
+      
+    // gets habit data from the database
+    useEffect(() => {
+        fetch("http://localhost:8080/api/v1/habit")
+        .then(res => res.json())
+        .then((result) => {
+            setHabits(result);
+            
+        })},[])
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -30,6 +64,13 @@ const Home = () => {
                         icon={icons.menu} 
                         dimension="130%"
                         handlePress={() => router.push('menu/Menu')}
+                        />
+                    ),
+                    headerRight: () => (
+                        <ScreenHeaderBtn 
+                        icon={icons.refresh} 
+                        dimension="130%"
+                        handlePress={handleRefresh}
                         />
                     ),
                     headerTitle: ""
@@ -45,13 +86,33 @@ const Home = () => {
                 <View style={styles.habitContainer}>
                     <View style={styles.header}>
                         <Text style={styles.headerTitle}>Habits</Text>
-                        <TouchableOpacity>
-                        {/*doesnt currently work and im not sure if i should include it*/}
-                        {/* test commit 2 */}
-                            <Text styles={styles.headerBtn}>Sort A-Z</Text>
-                        </TouchableOpacity>
                     </View>
                     <ScrollView showsVerticalScrollIndicator={false}>
+                    {refreshing ? (
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+                        // checks for any errors 
+                    ) : error ? (
+                        <Text style={styles.text}>Something went wrong</Text>
+                        // renders placeholder if habits is empty 
+                    ) : habits.length === 0 ? (
+                        <Text style={styles.text}>Press the plus button to start tracking habits!</Text>
+                    ) : (
+                        // renders the HabitCard component for each habit 
+                        habits.map(item => (
+                        <HabitCard 
+                            key={item.habitId}
+                            habit={item}
+                            handleNavigate={() => router.push(`/habits/${item.habitId}`)} 
+                            //handleNavigate={() => handleCardPress(item)}
+                        />
+                        ))
+                    )}
+                    </ScrollView>
+
+                        {/* add an if state ment that says "Press the plus button to start tracking habits!" if habits is  empty*/}
+
+
+                    {/* <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.cardsContainer}>
                         {isLoading ? (
                         <ActivityIndicator size="large" color={COLORS.primary} />
@@ -59,14 +120,15 @@ const Home = () => {
                         <Text>Something went wrong</Text>
                         ) : (
                         
-                        [ 1, 2, 3 ].map((habit) => (
+                        habits.map((habit) => (
                             <HabitCard 
-                            handleNavigate={() => router.push(`/habits/${habit.habit_id}`)}
+                            handleNavigate={() => router.push(`/habits/${habit.habit_id}`)} 
+                            habit={habit}
                             />
-                        ))
+                            ))
                         )}
                     </View>
-                    </ScrollView>
+                    </ScrollView> */}
                 </View>
 
                 </View>

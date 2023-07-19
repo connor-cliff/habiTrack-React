@@ -3,18 +3,18 @@ import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 
 import styles from './reminder.style'
 
-const Reminder = () => {
-  const [reminderTime, setReminderTime] = useState('');
+const Reminder = ({ reminder, setReminder }) => {
+  //const [reminderTime, setReminderTime] = useState('');
 
-  const handleTimeChange = (text) => {
-    setReminderTime(text);
-  };
+  // const handleTimeChange = (text) => {
+  //   setReminderTime(text);
+  // };
 
-  const handleSetReminder = () => {
-    console.log('Set reminder for:', reminderTime);
-    // Clear the text input
-    setReminderTime('');
-  };
+  // const handleSetReminder = () => {
+  //   console.log('Set reminder for:', reminderTime);
+  //   // Clear the text input
+  //   setReminderTime('');
+  // };
 
   return (
     <View style={styles.inputContainer}>
@@ -22,17 +22,17 @@ const Reminder = () => {
         <TextInput
             style={styles.userInput}
             placeholder="HH:MM"
-            value={reminderTime}
-            onChangeText={handleTimeChange}
+            value={reminder}
+            onChangeText={(text) => setReminder(text)}
           />
       </View>
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity>
           <Text style={styles.buttonText}>Set reminder</Text>
         </TouchableOpacity>
        </View>
-    </View>
+    </View> */}
     </View>
   );
 };
