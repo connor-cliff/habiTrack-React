@@ -12,7 +12,7 @@ const Home = () => {
     const router = useRouter();
     const isLoading = false;
     const error = false;
-
+   
     const [habits, setHabits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -98,14 +98,14 @@ const Home = () => {
                         <Text style={styles.text}>Press the plus button to start tracking habits!</Text>
                     ) : (
                         // renders the HabitCard component for each habit 
-                        habits.map(item => (
+                        habits.map((item, index) => (
                         <HabitCard 
-                            key={item.habitId}
+                            //key={item.habitId}
                             habit={item}
-                            handleNavigate={() => router.push(`/habits/${item.habitId}`)} 
-                            //handleNavigate={() => handleCardPress(item)}
+                            handleNavigate={() => router.push(`/habits/${index}`)} 
                         />
                         ))
+                        
                     )}
                     </ScrollView>
 

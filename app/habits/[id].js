@@ -26,20 +26,30 @@ const handleSave = () => {
       // Create the updated habit object with modified details
       const updatedHabit = { ...habit, name, description, reminder, streak };
 
-      //setHabit({ name, description, reminder, streak })
-      //const updatedHabit = { name, description, reminder, streak }
-
-      // Make an HTTP PUT request to update the habit in the database
-      // only works if you change the reminder too because reminderr cannot be null
-        fetch(`http://localhost:8080/api/v1/habit/${current}?name=${name}&description=${description}&streak=${streak}&reminder=${reminder}`, {
-        //fetch(`http://localhost:8080/api/v1/habit/${params.id}`, {
-        method: "PUT",
-        headers: {'Content-Type':'application/json',},
-        body: JSON.stringify(updatedHabit),
-        
-      })
-
+      if (reminder === null){
+              // Make an HTTP PUT request to update the habit in the database
+        // only works if you change the reminder too because reminderr cannot be null
+        fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?name=${name}&description=${description}&streak=${streak}`, {
+          //fetch(`http://localhost:8080/api/v1/habit/${params.id}`, {
+          method: "PUT",
+          headers: {'Content-Type':'application/json',},
+          body: JSON.stringify(updatedHabit),
+          
+        })
         router.push('/');
+      } else {
+              // Make an HTTP PUT request to update the habit in the database
+        // only works if you change the reminder too because reminderr cannot be null
+        fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?name=${name}&description=${description}&streak=${streak}&reminder=${reminder}`, {
+          //fetch(`http://localhost:8080/api/v1/habit/${params.id}`, {
+          method: "PUT",
+          headers: {'Content-Type':'application/json',},
+          body: JSON.stringify(updatedHabit),
+          
+        })
+
+          router.push('/');
+      }
     };
 
     const handleDelete = () => {

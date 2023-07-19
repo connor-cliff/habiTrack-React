@@ -15,6 +15,7 @@ const HabitCard = ({ habit, handleNavigate }) => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ streak: newStreak })
     })
+    console.log(habit.habitId)
 };
 
   return (
