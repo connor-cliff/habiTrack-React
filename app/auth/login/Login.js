@@ -5,13 +5,44 @@ import { useCallBack, useState } from 'react';
 import { AddHabitFooter, IconSelection, ScreenHeaderBtn, Reminder } from '../../../components';
 import { COLORS, icons, SIZES } from '../../../constants';
 import styles from "../auth.style";
+import useFetch from '../../../hook/useFetch'; 
+
 
 
 const Login = () => {
   const params = useSearchParams();
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+  const { data } = useFetch('user', {habitId: params.id});
+
+  const handleLogin = () => {
+
+    console.log(data);
+    if (!email || !pass) {
+      console.log('Please complete all fields'); // You can also show an alert
+      return;
+    }
+
+    const userExists = data.some((d) => d.email === email && d.pass === pass);
+
+    console.log(userExists)
+    console.log(email)
+    console.log(data.email)
+    console.log(pass)
+    console.log(data.pass)
+
+
+    if (userExists) {
+      console.log('User exists');
+      // Handle successful login 
+      router.push('/'); 
+    } else {
+      console.log('Invalid email or password'); // You can also show an alert
+    }
+  };
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -38,7 +69,7 @@ const Login = () => {
                           style={styles.userInput}
                           value={email}
                           placeholder='Email'
-                          onChangeText={(text) => setName(text)}
+                          onChangeText={(text) => setEmail(text)}
                         />
                       </View>
                     </View>
@@ -49,9 +80,9 @@ const Login = () => {
                       <View style={styles.inputWrapper}>
                         <TextInput
                           style={styles.userInput}
-                          value={password}
+                          value={pass}
                           placeholder='Password'
-                          onChangeText={(text) => setDescription(text)}
+                          onChangeText={(text) => setPass(text)}
                         />
                       </View>
                     </View>
@@ -59,13 +90,13 @@ const Login = () => {
 
                   <View style={styles.inputContainer}>
                     <View style={styles.buttonWrapper}>
-                      <TouchableOpacity onPress={() => router.push('/')}>
+                      <TouchableOpacity onPress={handleLogin}>
                         <Text style={styles.buttonText}>Login</Text>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.buttonWrapper}>
                     <TouchableOpacity onPress={() => router.push('auth/sign-up/SignUp')}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
+                        <Text style={styles.buttonText}>Go to sign Up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

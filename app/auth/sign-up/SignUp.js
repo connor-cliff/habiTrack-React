@@ -12,7 +12,27 @@ const SignUp = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [pass, setPass] = useState("");
+
+  const handleSignup = () =>{
+
+    // Check if any field is left blank
+    if (!name || !email || !pass) {
+      console.log('Please complete all fields'); // make an alert
+      return;
+    }
+
+    const user = { name, email, pass }
+
+    // Save data to the database
+    fetch("http://localhost:8080/api/v1/user",{
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(user)
+    })
+    router.push('auth/login/Login')
+};
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -57,7 +77,7 @@ const SignUp = () => {
                           style={styles.userInput}
                           value={email}
                           placeholder='Email'
-                          onChangeText={(text) => setName(text)}
+                          onChangeText={(text) => setEmail(text)}
                         />
                       </View>
                     </View>
@@ -68,9 +88,9 @@ const SignUp = () => {
                       <View style={styles.inputWrapper}>
                         <TextInput
                           style={styles.userInput}
-                          value={password}
+                          value={pass}
                           placeholder='Password'
-                          onChangeText={(text) => setDescription(text)}
+                          onChangeText={(text) => setPass(text)}
                         />
                       </View>
                     </View>
@@ -78,13 +98,13 @@ const SignUp = () => {
 
                   <View style={styles.inputContainer}>
                     <View style={styles.buttonWrapper}>
-                      <TouchableOpacity onPress={() => router.push('auth/login/Login')}>
-                        <Text style={styles.buttonText}>Login</Text>
+                    <TouchableOpacity onPress={handleSignup}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.buttonWrapper}>
-                    <TouchableOpacity onPress={() => router.push('auth/login/Login')}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
+                      <TouchableOpacity onPress={() => router.push('auth/login/Login')}>
+                        <Text style={styles.buttonText}>Go to login</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

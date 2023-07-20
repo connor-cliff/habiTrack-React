@@ -18,6 +18,13 @@ const AddHabit = ({}) => {
   const streak = 0;
 
   const handleNavigate = () =>{
+
+    // Check if name is left blank
+    if (!name) {
+      console.log('Please add a name'); // make an alert
+      return;
+    }
+
     const habit = { name, description, reminder, streak }
 
     // Save data to the database
