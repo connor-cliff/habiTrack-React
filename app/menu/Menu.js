@@ -55,7 +55,7 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.logout}
                         label="Logout"
-                        handleNavigate={() => router.push('auth/login/Login')}
+                        handleNavigate={() => router.push('/auth/login/Login')}
                         />
                 </View>
             </View>

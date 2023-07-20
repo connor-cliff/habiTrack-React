@@ -2,18 +2,16 @@ import { Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl
 import { Stack, useRouter, useSearchParams } from 'expo-router';
 import { useCallBack, useState } from 'react';
 
-import { Footer, IconSelection, ScreenHeaderBtn, Reminder } from '../../components';
+import { Footer, ScreenHeaderBtn } from '../../components';
 import { COLORS, icons, SIZES } from '../../constants';
 import styles from "../habits/habits.style";
 
 
 const AddHabit = ({}) => {
 
-  //const { refreshHabits } = route.params;
   const router = useRouter();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [icon, setIcon] = useState('');
   const [reminder, setReminder] = useState('');
   const streak = 0;
 
@@ -107,17 +105,6 @@ const AddHabit = ({}) => {
                     </View>
                     </View>
                   </View>
-
-                  {/* <View>
-                    <View>
-                      <Text style={styles.fieldName}>Icon</Text>
-                    </View>
-                    <View style={styles.iconInputContainer}>
-                      <IconSelection icon={icon} setIcon={setIcon}/>
-                    </View>
-                  </View>
-                  {/* Add one more icon and display as two rows of four */}
-
                 </View> 
               
               <Footer 

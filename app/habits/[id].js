@@ -3,7 +3,7 @@ import { Stack, useRouter, useNavigate, useLocalSearchParams, useSearchParams } 
 import { useCallBack, useState, useEffect } from 'react';
 import axios from "axios";
 
-import { IconSelection, ScreenHeaderBtn, Reminder, Footer } from '../../components';
+import { ScreenHeaderBtn, Footer } from '../../components';
 import { COLORS, icons } from '../../constants';
 import styles from "../habits/habits.style";
 import useFetch from '../../hook/useFetch';
@@ -179,16 +179,7 @@ const handleSave = () => {
                     </View>
                     </View>
                   </View>
-
-                  {/* <View>
-                    <View>
-                      <Text style={styles.fieldName}>Icon</Text>
-                    </View>
-                    <View style={styles.iconInputContainer}>
-                      <IconSelection />
-                    </View>
-                  </View> */}
-
+                  
                   <View>
                   <View>
                       <Text style={styles.fieldName}>Delete habit</Text>

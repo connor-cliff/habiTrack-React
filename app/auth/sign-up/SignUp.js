@@ -30,7 +30,7 @@ const SignUp = () => {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(user)
     })
-    router.push('auth/login/Login')
+    router.push('/')
 };
 
 
@@ -103,7 +103,7 @@ const SignUp = () => {
                       </TouchableOpacity>
                     </View>
                     <View style={styles.buttonWrapper}>
-                      <TouchableOpacity onPress={() => router.push('auth/login/Login')}>
+                      <TouchableOpacity onPress={() => router.push('/auth/login/Login')}>
                         <Text style={styles.buttonText}>Go to login</Text>
                       </TouchableOpacity>
                     </View>

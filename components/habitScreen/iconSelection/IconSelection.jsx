@@ -21,7 +21,7 @@ const IconSelection = ({ icon, setIcon }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.button}>
-        <TouchableOpacity onPress={() => router.push("/")}>
+        <TouchableOpacity onPress={() => router.push("/home/home")}>
           <Image source={item.icon} resizeMode="cover" />
         </TouchableOpacity>
       </View>
