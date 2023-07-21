@@ -35,9 +35,9 @@ const Login = () => {
 
 
 
-    console.log("--------------")
-    console.log("current userId: " + loggedInUserId)
-    console.log("--------------")
+    // console.log("--------------")
+    // console.log("current userId: " + loggedInUserId)
+    // console.log("--------------")
 
 
 

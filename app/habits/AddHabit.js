@@ -10,10 +10,13 @@ import styles from "../habits/habits.style";
 const AddHabit = ({}) => {
 
   const router = useRouter();
+  const [userId, setUserId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [reminder, setReminder] = useState('');
   const streak = 0;
+
+ 
 
   const handleNavigate = () =>{
 
@@ -23,7 +26,13 @@ const AddHabit = ({}) => {
       return;
     }
 
-    const habit = { name, description, reminder, streak }
+  
+    setUserId(parseInt(global.currentUserId))
+    console.log(global.currentUserId)
+
+    // Use the updated userId value after setUserId is processed
+    const habit = { userId: parseInt(global.currentUserId), name, description, reminder, streak }
+
 
     // Save data to the database
     fetch("http://localhost:8080/api/v1/habit",{
@@ -32,7 +41,7 @@ const AddHabit = ({}) => {
       body: JSON.stringify(habit)
     })
 
-    router.push('/');
+    router.push(`/?post=${global.currentUserId}`);
 };
 
   return (

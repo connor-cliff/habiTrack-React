@@ -9,12 +9,14 @@ const HabitCard = ({ habit, handleNavigate }) => {
     // Update the streak 
     const newStreak = habit.streak + 1;
 
+ 
+
     fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?streak=${newStreak}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ streak: newStreak })
     })
-    console.log(habit.habitId)
+    //console.log(habit.habitId)
 };
 
   return (

@@ -1,5 +1,5 @@
 import { Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
-import { Stack, useRouter, useSearchParams } from 'expo-router';
+import { Stack, useRouter, useSearchParams, useLocalSearchParams  } from 'expo-router';
 import { useCallBack, useState, useEffect } from 'react';
 
 import { ScreenHeaderBtn, Footer } from '../../components';
@@ -9,7 +9,8 @@ import useFetch from '../../hook/useFetch';
 
 
 const EditHabit = () => {
-  const params = useSearchParams();
+  const params = useLocalSearchParams();
+  const { post } = useLocalSearchParams();
   const router = useRouter();
 
   const { data } = useFetch('habit', { habitId: params.id },)
@@ -19,11 +20,24 @@ const EditHabit = () => {
   const [description, setDescription] = useState('');
   const [streak, setStreak] = useState(0);
   const [reminder, setReminder] = useState('');
-  const current = parseInt(params.id);
+  const currentId = parseInt(params.id);
+
+
+  console.log("post: " + post);
+   console.log("params: " + params);
+   console.log("habitId: params.id" + {habitId: params.id}.habitId);
+   console.log("params.id/array index: " + params.id);
+   console.log("currentId/array index: " + currentId);
+  // console.log("habit" + habit);
+   console.log("data/array: " + data);
+
+  console.log("habit.habitId: " + habit.habitId)
 
 const handleSave = () => {
       // Create the updated habit object with modified details
       const updatedHabit = { ...habit, name, description, reminder, streak };
+
+      //console.log("habit.habitId" + habit.habitId)
 
       if (reminder === null){
               // Make an HTTP PUT request to update the habit in the database
@@ -35,7 +49,7 @@ const handleSave = () => {
           body: JSON.stringify(updatedHabit),
           
         })
-        router.push('/');
+        router.push(`/?post=${global.currentUserId}`);
       } else {
               // Make an HTTP PUT request to update the habit in the database
         // only works if you change the reminder too because reminderr cannot be null
@@ -47,21 +61,23 @@ const handleSave = () => {
           
         })
 
-          router.push('/');
+          router.push(`/?post=${global.currentUserId}`);
       }
     };
 
     const handleDelete = () => {
         // Make an HTTP DELETE request to delete the habit from the database
-      fetch(`http://localhost:8080/api/v1/habit/${current}`, {
+      fetch(`http://localhost:8080/api/v1/habit/${currentId}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
         },
+        
       })
         .then(response => { // delete
-        
-          router.push('/');
+          //console.log("currentId: " + currentId);
+          router.push({pathname: `/?post=${global.currentUserId}`, params: { post1: currentId }});
+       
         })
         .catch(error => {
           console.error("Error deleting habit:", error);
@@ -70,17 +86,36 @@ const handleSave = () => {
     }
 
 
+  // useEffect(() => {
+  //   if (data && data.length > 0) {
+  //     setHabit(data[currentId]);
+  //     setName(data[currentId].name);
+  //     setDescription(data[currentId].description);
+  //     setStreak(data[currentId].streak);
+  //     setReminder(data[currentId].reminder);
+  //   }
+  // }, [data, currentId]);
+  
   useEffect(() => {
     if (data && data.length > 0) {
-      setHabit(data[current]);
-      setName(data[current].name);
-      setDescription(data[current].description);
-      setStreak(data[current].streak);
-      setReminder(data[current].reminder);
-    }
-  }, [data, current]);
-
+      const habitIndex = data.findIndex((habit) => habit.habitId === currentId);
+      if (habitIndex !== -1) {
+        // Habit found, set the state and print the index
+        setHabit(data[habitIndex]);
+        setName(data[habitIndex].name);
+        setDescription(data[habitIndex].description);
+        setStreak(data[habitIndex].streak);
+        setReminder(data[habitIndex].reminder);
   
+        console.log("Habit found at index:", habitIndex);
+      } else {
+        // Habit not found in data array
+        console.log("Habit with habitId not found in data array");
+      }
+    }
+  }, [data, currentId]);
+  
+
   
   const handleNavigate = () => {
     // PUT data here

@@ -8,12 +8,13 @@ import { HabitCard, Footer, ScreenHeaderBtn } from '../components';
 
 const Home = () => {
     const { post } = useLocalSearchParams();
-    console.log("index post: " + post)
+    //console.log("index post: " + post)
 
     // do i need these?
     const router = useRouter();
     const isLoading = false;
     const error = false;
+    const test = 10;
    
     const [habits, setHabits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -21,6 +22,8 @@ const Home = () => {
     /**
      * this refresh works on its own so now i need to just figure out a way to pass it to the footer button
      *  */ 
+
+
 
     const handleRefresh = () => {
         //const userId = userId;
@@ -30,6 +33,7 @@ const Home = () => {
           .then(res => res.json())
           .then(result => {
             setHabits(result);
+            //console.log("result" + result)
             setRefreshing(false);
           })
           .catch(error => {
@@ -44,6 +48,11 @@ const Home = () => {
         fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
         .then(res => res.json())
         .then((result) => {
+        // Filter the habits by userId before setting into state
+
+            // const filteredHabits = result.filter(habit => habit.userId === post);
+            // console.log(filteredHabits);
+            // console.log(post);
             setHabits(result);
             
         })},[ post ])
@@ -97,12 +106,15 @@ const Home = () => {
                         <HabitCard 
                             key={item.habitId}
                             habit={item}
-                            handleNavigate={() => router.push(`/habits/${index}`)} 
+                            handleNavigate={() => router.push({pathname: `/habits/${item.habitId}`, params: { post: item.habitId } })} 
+                            //handleNavigate={(habit) => handleHabitClick(habit, index)} // Pass the habit and index to the handleHabitClick function
+
                         />
-                        ))
-                        
-                    )}
+                        )))}
+                       
+                    
                     </ScrollView>
+                    
 
                         {/* add an if state ment that says "Press the plus button to start tracking habits!" if habits is  empty*/}
 
