@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Image, TouchableOpacity, Text } from 'react-native';
-import { icons } from '../../constants'
+import { Image, TouchableOpacity, Text } from 'react-native';
 
 import styles from "./menubtn.style";
 

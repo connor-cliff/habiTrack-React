@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { useCallBack, useState } from 'react';
 
 import styles from "./habitcard.style";
 import { icons } from "../../constants";

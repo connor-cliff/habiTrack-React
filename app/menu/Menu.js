@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity, SafeAreaView, Text } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 
 import { MenuBtn, ScreenHeaderBtn } from "../../components";

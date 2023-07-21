@@ -1,7 +1,6 @@
 import { Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
-import { Stack, useRouter, useNavigate, useLocalSearchParams, useSearchParams } from 'expo-router';
+import { Stack, useRouter, useSearchParams } from 'expo-router';
 import { useCallBack, useState, useEffect } from 'react';
-import axios from "axios";
 
 import { ScreenHeaderBtn, Footer } from '../../components';
 import { COLORS, icons } from '../../constants';
@@ -60,7 +59,7 @@ const handleSave = () => {
           'Content-Type': 'application/json',
         },
       })
-        .then(response => {
+        .then(response => { // delete
         
           router.push('/');
         })

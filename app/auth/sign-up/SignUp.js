@@ -1,8 +1,8 @@
-import { Text, View, SafeAreaView, ScrollView, ActivityIndicator, Button, TouchableOpacity, RefreshControl, TextInput, FlatList } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack, useRouter, useSearchParams } from 'expo-router';
-import { useCallBack, useState } from 'react';
+import { useState } from 'react';
 
-import { AddHabitFooter, IconSelection, ScreenHeaderBtn, Reminder } from '../../../components';
+import { ScreenHeaderBtn } from '../../../components';
 import { COLORS, icons, SIZES } from '../../../constants';
 import styles from "../auth.style";
 

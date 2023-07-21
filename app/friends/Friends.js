@@ -1,6 +1,6 @@
 import { Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Stack, useRouter, useSearchParams } from 'expo-router';
-import { useCallBack, useState } from 'react';
+import { useState } from 'react';
 
 import { ScreenHeaderBtn, FriendCard } from '../../components';
 import { COLORS, icons } from '../../constants';

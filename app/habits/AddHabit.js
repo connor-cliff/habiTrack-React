@@ -1,5 +1,5 @@
-import { Text, View, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, TextInput, FlatList } from 'react-native';
-import { Stack, useRouter, useSearchParams } from 'expo-router';
+import { Text, View, SafeAreaView, TextInput } from 'react-native';
+import { Stack, useRouter} from 'expo-router';
 import { useCallBack, useState } from 'react';
 
 import { Footer, ScreenHeaderBtn } from '../../components';

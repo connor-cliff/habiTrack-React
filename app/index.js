@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, SafeAreaView, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { View, ScrollView, SafeAreaView, Text, ActivityIndicator } from 'react-native';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import styles from "./index.style";
 import { COLORS, icons, SIZES } from '../constants';
 import { HabitCard, Footer, ScreenHeaderBtn } from '../components';
 
 const Home = () => {
+    const { post } = useLocalSearchParams();
+    console.log("index post: " + post)
 
     // do i need these?
     const router = useRouter();
@@ -21,9 +23,10 @@ const Home = () => {
      *  */ 
 
     const handleRefresh = () => {
+        //const userId = userId;
         setRefreshing(true);
         
-        fetch("http://localhost:8080/api/v1/habit")
+        fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
           .then(res => res.json())
           .then(result => {
             setHabits(result);
@@ -35,23 +38,15 @@ const Home = () => {
           });
       };
       
-
-    //   const handleCardPress = (habit) => {
-    //     console.log(habit);
-    //     console.log(habit.habitId);
-    //     console.log("--------");
-    //     router.push(`/habits/${habit.habitId}`);
-    //   };
-      
       
     // gets habit data from the database
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/habit")
+        fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
         .then(res => res.json())
         .then((result) => {
             setHabits(result);
             
-        })},[])
+        })},[ post ])
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -100,7 +95,7 @@ const Home = () => {
                         // renders the HabitCard component for each habit 
                         habits.map((item, index) => (
                         <HabitCard 
-                            //key={item.habitId}
+                            key={item.habitId}
                             habit={item}
                             handleNavigate={() => router.push(`/habits/${index}`)} 
                         />
