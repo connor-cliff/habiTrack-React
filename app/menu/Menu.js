@@ -34,7 +34,7 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.home}
                         label="Home"
-                        handleNavigate={() => router.push(`/?post=${global.currentUserId}`)}
+                        handleNavigate={() => router.push(`/home/Home/?post=${global.currentUserId}`)}
                         />
                 </View>
                 <View style={styles.container}>
@@ -55,7 +55,7 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.logout}
                         label="Logout"
-                        handleNavigate={() => router.push('/auth/login/Login')}
+                        handleNavigate={() => router.push('/')}
                         />
                 </View>
             </View>

@@ -49,7 +49,7 @@ const handleSave = () => {
           body: JSON.stringify(updatedHabit),
           
         })
-        router.push(`/?post=${global.currentUserId}`);
+        router.push(`/home/Home/?post=${global.currentUserId}`);
       } else {
               // Make an HTTP PUT request to update the habit in the database
         // only works if you change the reminder too because reminderr cannot be null
@@ -61,7 +61,7 @@ const handleSave = () => {
           
         })
 
-          router.push(`/?post=${global.currentUserId}`);
+          router.push(`/home/Home/?post=${global.currentUserId}`);
       }
     };
 
@@ -76,7 +76,7 @@ const handleSave = () => {
       })
         .then(response => { // delete
           //console.log("currentId: " + currentId);
-          router.push({pathname: `/?post=${global.currentUserId}`, params: { post1: currentId }});
+          router.push({pathname: `/home/Home/?post=${global.currentUserId}`, params: { post1: currentId }});
        
         })
         .catch(error => {
@@ -119,7 +119,7 @@ const handleSave = () => {
   
   const handleNavigate = () => {
     // PUT data here
-    router.push(() => router.push('/'));
+    router.push(() => router.push('/home/Home'));
   };
   
   return (
