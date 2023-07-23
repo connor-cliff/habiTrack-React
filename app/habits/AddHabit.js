@@ -41,7 +41,7 @@ const AddHabit = ({}) => {
       body: JSON.stringify(habit)
     })
 
-    router.push(`/?post=${global.currentUserId}`);
+    router.push(`/home/Home/?post=${global.currentUserId}`);
 };
 
   return (

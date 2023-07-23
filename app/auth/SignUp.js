@@ -2,9 +2,9 @@ import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } fro
 import { Stack, useRouter, useSearchParams } from 'expo-router';
 import { useState } from 'react';
 
-import { ScreenHeaderBtn } from '../../../components';
-import { COLORS, icons, SIZES } from '../../../constants';
-import styles from "../auth.style";
+import { ScreenHeaderBtn } from '../../components';
+import { COLORS, icons, SIZES } from '../../constants';
+import styles from "./auth.style";
 
 
 const SignUp = () => {
