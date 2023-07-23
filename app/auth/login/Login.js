@@ -28,17 +28,10 @@ const Login = () => {
     const userExists = data.some((d) => d.email === email && d.pass === pass);
     const loggedInUser = data.find((d) => d.email === email && d.pass === pass);
     const loggedInUserId = loggedInUser.userId;
+    // const loggedInUserName = loggedInUser.name;
 
     global.currentUserId = loggedInUserId;
-
-    console.log("currentUserId " + currentUserId)
-
-
-
-    // console.log("--------------")
-    // console.log("current userId: " + loggedInUserId)
-    // console.log("--------------")
-
+    global.currentUsersName = loggedInUser.name;
 
 
     /**

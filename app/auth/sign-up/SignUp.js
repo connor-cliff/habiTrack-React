@@ -30,7 +30,7 @@ const SignUp = () => {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(user)
     })
-    router.push('/')
+    router.push('/auth/login/Login')
 };
 
 

@@ -15,6 +15,9 @@ const Home = () => {
     const isLoading = false;
     const error = false;
     const test = 10;
+
+    const usersName = global.currentUserName;
+    console.log("usersName " + usersName)
    
     const [habits, setHabits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -28,7 +31,7 @@ const Home = () => {
     const handleRefresh = () => {
         //const userId = userId;
         setRefreshing(true);
-        
+        // change to ip and add a note in the readme?
         fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
           .then(res => res.json())
           .then(result => {
@@ -83,7 +86,7 @@ const Home = () => {
 
                 <View style={{ flex: 1, padding: SIZES.medium }}>
                 <View style={styles.welcomeContainer}>
-                    <Text style={styles.userName}>Hello Connor</Text>
+                    <Text style={styles.userName}>Hello {global.currentUsersName}</Text>
                     <Text style={styles.welcomeMessage}>Good luck with your goals today!</Text>
                 </View>
 

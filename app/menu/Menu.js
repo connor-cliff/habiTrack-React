@@ -34,7 +34,7 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.home}
                         label="Home"
-                        handleNavigate={() => router.push('/')}
+                        handleNavigate={() => router.push(`/?post=${global.currentUserId}`)}
                         />
                 </View>
                 <View style={styles.container}>
