@@ -4,17 +4,12 @@ import styles from "./footer.style";
 
 const Footer = ({ icon, handleNavigate}) => {
 
-  // const handlePress = () => {
-  //   handleNavigate();
-  //   refreshHabits();
-  // };
-
-
   return (
     <TouchableOpacity style={styles.container} onPress={handleNavigate}>
       <View style={styles.iconPosition}>
         <View style={styles.likeBtn}>
-        {typeof icon === "string" ? (
+        { // renders Complete if icon is a string and a plus icon otherwise
+          typeof icon === "string" ? (
             <Text style={styles.btnText}>{icon}</Text>
           ) : (
             <Image

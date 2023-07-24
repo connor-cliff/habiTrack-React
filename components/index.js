@@ -8,10 +8,6 @@ import HabitCard from "./home/HabitCard"
 // menu screen
 import MenuBtn from "./menu/MenuBtn";
 
-// habit screen
-import IconSelection from './habitScreen/iconSelection/IconSelection'
-import Reminder from './habitScreen/reminder/Reminder'
-
 // friend screen
 import FriendCard from './friends/FriendCard'
 
@@ -21,6 +17,5 @@ export {
   HabitCard,
   Footer,
   MenuBtn,
-  IconSelection,
-  Reminder
+
 };

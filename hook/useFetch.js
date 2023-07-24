@@ -4,6 +4,7 @@ import axios from "axios";
 const useFetch = (endpoint, query) => {
   const [data, setData] = useState([]);
   
+  // fetchs data from the database for specific tables and queries 
   useEffect(() => {
     const fetchData = async () => {
 

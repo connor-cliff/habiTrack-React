@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xLarge,
     color: COLORS.secondary,
   },
-
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",

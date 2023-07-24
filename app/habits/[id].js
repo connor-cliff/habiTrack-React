@@ -1,6 +1,6 @@
 import { Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
-import { Stack, useRouter, useSearchParams, useLocalSearchParams  } from 'expo-router';
-import { useCallBack, useState, useEffect } from 'react';
+import { Stack, useRouter, useLocalSearchParams  } from 'expo-router';
+import { useState, useEffect } from 'react';
 
 import { ScreenHeaderBtn, Footer } from '../../components';
 import { COLORS, icons } from '../../constants';
@@ -9,10 +9,10 @@ import useFetch from '../../hook/useFetch';
 
 
 const EditHabit = () => {
-  const params = useLocalSearchParams();
-  const { post } = useLocalSearchParams();
-  const router = useRouter();
 
+  // Get the "params" value from local search parameters using expo-router
+  const params = useLocalSearchParams();
+  const router = useRouter();
   const { data } = useFetch('habit', { habitId: params.id },)
 
   const [habit, setHabit] = useState({});
@@ -22,61 +22,51 @@ const EditHabit = () => {
   const [reminder, setReminder] = useState('');
   const currentId = parseInt(params.id);
 
-
-  console.log("post: " + post);
-   console.log("params: " + params);
-   console.log("habitId: params.id" + {habitId: params.id}.habitId);
-   console.log("params.id/array index: " + params.id);
-   console.log("currentId/array index: " + currentId);
-  // console.log("habit" + habit);
-   console.log("data/array: " + data);
-
-  console.log("habit.habitId: " + habit.habitId)
-
+  // Handled the "Complete" button click, updating the habit in the database
 const handleSave = () => {
+
       // Create the updated habit object with modified details
       const updatedHabit = { ...habit, name, description, reminder, streak };
 
-      //console.log("habit.habitId" + habit.habitId)
-
-      if (reminder === null){
-              // Make an HTTP PUT request to update the habit in the database
-        // only works if you change the reminder too because reminderr cannot be null
+      // Updates the habit data in the database 
+      if (reminder === null){ 
         fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?name=${name}&description=${description}&streak=${streak}`, {
-          //fetch(`http://localhost:8080/api/v1/habit/${params.id}`, {
           method: "PUT",
           headers: {'Content-Type':'application/json',},
           body: JSON.stringify(updatedHabit),
-          
-        })
-        router.push(`/home/Home/?post=${global.currentUserId}`);
-      } else {
-              // Make an HTTP PUT request to update the habit in the database
-        // only works if you change the reminder too because reminderr cannot be null
-        fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?name=${name}&description=${description}&streak=${streak}&reminder=${reminder}`, {
-          //fetch(`http://localhost:8080/api/v1/habit/${params.id}`, {
-          method: "PUT",
-          headers: {'Content-Type':'application/json',},
-          body: JSON.stringify(updatedHabit),
-          
         })
 
+        // Redirect to the Home screen after saving changes
+        router.push(`/home/Home/?post=${global.currentUserId}`);
+
+      } else {
+
+        // if reminder is also being changed then it is updated here because otherwise LocalTime variables cannot be null
+        fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?name=${name}&description=${description}&streak=${streak}&reminder=${reminder}`, {
+          method: "PUT",
+          headers: {'Content-Type':'application/json',},
+          body: JSON.stringify(updatedHabit),
+        })
+
+        // Redirect to the Home screen after saving changes
           router.push(`/home/Home/?post=${global.currentUserId}`);
       }
     };
 
+    // handles the "Delete" button click, deleting the habit from the database
     const handleDelete = () => {
-        // Make an HTTP DELETE request to delete the habit from the database
+
+      // Delete the habit from the database
       fetch(`http://localhost:8080/api/v1/habit/${currentId}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
         },
-        
-      })
-        .then(response => { // delete
-          //console.log("currentId: " + currentId);
-          router.push({pathname: `/home/Home/?post=${global.currentUserId}`, params: { post1: currentId }});
+        })
+        .then(response => {
+          router.push({
+            pathname: `/home/Home/?post=${global.currentUserId}`, 
+            params: { post1: currentId }});
        
         })
         .catch(error => {
@@ -85,42 +75,25 @@ const handleSave = () => {
         });
     }
 
-
-  // useEffect(() => {
-  //   if (data && data.length > 0) {
-  //     setHabit(data[currentId]);
-  //     setName(data[currentId].name);
-  //     setDescription(data[currentId].description);
-  //     setStreak(data[currentId].streak);
-  //     setReminder(data[currentId].reminder);
-  //   }
-  // }, [data, currentId]);
-  
+  // set the form fields with the habit details when data is fetched
   useEffect(() => {
     if (data && data.length > 0) {
       const habitIndex = data.findIndex((habit) => habit.habitId === currentId);
       if (habitIndex !== -1) {
-        // Habit found, set the state and print the index
+        // Habit found, set the state 
         setHabit(data[habitIndex]);
         setName(data[habitIndex].name);
         setDescription(data[habitIndex].description);
         setStreak(data[habitIndex].streak);
         setReminder(data[habitIndex].reminder);
   
-        console.log("Habit found at index:", habitIndex);
       } else {
+        
         // Habit not found in data array
         console.log("Habit with habitId not found in data array");
       }
     }
   }, [data, currentId]);
-  
-
-  
-  const handleNavigate = () => {
-    // PUT data here
-    router.push(() => router.push('/home/Home'));
-  };
   
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -139,8 +112,7 @@ const handleSave = () => {
                 }}
             />
             <>
-                
-                 <View style={styles.pageContainer}>
+                <View style={styles.pageContainer}>
                   <View style={styles.container}>
                     <Text style={styles.title}>Edit habit</Text>
                   </View>

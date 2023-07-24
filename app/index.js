@@ -1,48 +1,53 @@
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import { Stack, useRouter, useSearchParams, useLocalSearchParams } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
-import { COLORS, icons, SIZES } from '../constants';
+import { COLORS } from '../constants';
 import styles from "./auth/auth.style";
 import useFetch from '../hook/useFetch'; 
 
-
-
 const App = () => {
+  // Get the "post" value from local search parameters using expo-router
   const params = useLocalSearchParams();
 
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [error, setError] = useState("");
   const { data } = useFetch('user', {userId: params.id});
-
-
-  global.ip = "192.168.0.23";
 
   const handleLogin = () => {
 
+    // Check if the user exists in the database
     const userExists = data.some((d) => d.email === email && d.pass === pass);
 
+    // checks mandatory fields have been compeleted
     if (!email || !pass) {
-      console.log('Please complete all fields'); // You can also show an alert
+      console.log('Please complete all fields'); 
+      /* 
+      You can also show an alert
+       */
       return;
     }
 
+     // If user exists, handles successful login
     if (userExists) {
       const loggedInUser = data.find((d) => d.email === email && d.pass === pass);
       const loggedInUserId = loggedInUser.userId;
-      // const loggedInUserName = loggedInUser.name;
   
       global.currentUserId = loggedInUserId;
       global.currentUsersName = loggedInUser.name;
 
-      // Handle successful login 
-      router.push({pathname: '/home/Home', params: { post: loggedInUserId }}); 
+      // Take user to their home page
+      router.push({
+        pathname: '/home/Home', 
+        params: { post: loggedInUserId }}); 
 
     } else {
 
-      console.log('Invalid email or password'); // You can also show an alert
+      console.log('Invalid email or password'); 
+      /* 
+      You can also show an alert
+       */
     }
   };
 
@@ -103,10 +108,8 @@ const App = () => {
                       </TouchableOpacity>
                     </View>
                   </View>
-
                 </View>
               </ScrollView>
-              
             </>
     </SafeAreaView>
   )

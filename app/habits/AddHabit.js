@@ -1,38 +1,38 @@
 import { Text, View, SafeAreaView, TextInput } from 'react-native';
 import { Stack, useRouter} from 'expo-router';
-import { useCallBack, useState } from 'react';
+import { useState } from 'react';
 
 import { Footer, ScreenHeaderBtn } from '../../components';
-import { COLORS, icons, SIZES } from '../../constants';
+import { COLORS, icons } from '../../constants';
 import styles from "../habits/habits.style";
-
 
 const AddHabit = ({}) => {
 
   const router = useRouter();
+
   const [userId, setUserId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [reminder, setReminder] = useState('');
   const streak = 0;
 
- 
-
+  // handles the navigation when the user completes adding a habit
   const handleNavigate = () =>{
 
     // Check if name is left blank
     if (!name) {
-      console.log('Please add a name'); // make an alert
+      console.log('Please add a name'); 
+      /* 
+      make an alert 
+      */
       return;
     }
 
-  
+    // Convert the global currentUserId to an integer and update the userId state
     setUserId(parseInt(global.currentUserId))
-    console.log(global.currentUserId)
 
     // Use the updated userId value after setUserId is processed
     const habit = { userId: parseInt(global.currentUserId), name, description, reminder, streak }
-
 
     // Save data to the database
     fetch("http://localhost:8080/api/v1/habit",{
@@ -41,6 +41,7 @@ const AddHabit = ({}) => {
       body: JSON.stringify(habit)
     })
 
+    // Navigate to the Home screen with the updated user data
     router.push(`/home/Home/?post=${global.currentUserId}`);
 };
 
@@ -57,12 +58,10 @@ const AddHabit = ({}) => {
                         dimension={"70%"}
                         handlePress={() => router.back()}
                     />
-                ),
-                }}
+                ),}}
             />
             <>
-                
-                 <View style={styles.pageContainer}>
+                <View style={styles.pageContainer}>
                   <View style={styles.container}>
                     <Text style={styles.title}>Add a habit</Text>
                   </View>

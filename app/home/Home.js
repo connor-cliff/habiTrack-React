@@ -7,23 +7,19 @@ import { COLORS, icons, SIZES } from '../../constants';
 import { HabitCard, Footer, ScreenHeaderBtn } from '../../components';
 
 const Home = () => {
+    // Get the "post" value from local search parameters using expo-router
     const { post } = useLocalSearchParams();
-
-
     const router = useRouter();
-    const isLoading = false;
-    const error = false;
-    const test = 10;
 
     const [habits, setHabits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const error = false;
 
     /**
      * this refresh works on its own so now i need to just figure out a way to pass it to the footer button
      *  */ 
 
-
-
+    // Updates the home page after a refresh
     const handleRefresh = () => {
         setRefreshing(true);
         // change to ip and add a note in the readme?
@@ -41,7 +37,7 @@ const Home = () => {
       };
       
       
-    // gets habit data from the database
+    // fetchs user specific habit data from the database
     useEffect(() => {
         fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
         .then(res => res.json())
@@ -61,7 +57,9 @@ const Home = () => {
                         <ScreenHeaderBtn 
                         icon={icons.menu} 
                         dimension="130%"
-                        handlePress={() => router.push({pathname: 'menu/Menu', params:  { post: post}})}
+                        handlePress={() => router.push({
+                            pathname: 'menu/Menu', 
+                            params:  { post: post}})}
                         />
                     ),
                     headerRight: () => (
@@ -75,7 +73,7 @@ const Home = () => {
                 }}
             />
 
-                <View style={{ flex: 1, padding: SIZES.medium }}>
+            <View style={{ flex: 1, padding: SIZES.medium }}>
                 <View style={styles.welcomeContainer}>
                     <Text style={styles.userName}>Hello {global.currentUsersName}</Text>
                     <Text style={styles.welcomeMessage}>Good luck with your goals today!</Text>
@@ -86,7 +84,9 @@ const Home = () => {
                         <Text style={styles.headerTitle}>Habits</Text>
                     </View>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                    {refreshing ? (
+
+                    {// renders the habit data if all conditions are met
+                        refreshing ? (
                         <ActivityIndicator size="large" color={COLORS.primary} />
 
                         // checks for any errors 
@@ -103,16 +103,16 @@ const Home = () => {
                         <HabitCard 
                             key={item.habitId}
                             habit={item}
-                            handleNavigate={() => router.push({pathname: `/habits/${item.habitId}`, params: { post: item.habitId } })} 
+                            handleNavigate={() => router.push({
+                                pathname: `/habits/${item.habitId}`, 
+                                params: { post: item.habitId } })} 
                             button={true}
                         />
                         )))}
-                       
-                    
+
                     </ScrollView>
                 </View>
-
-                </View>
+            </View>
             <Footer icon={icons.plus} handleNavigate={() => router.push('habits/AddHabit')}/>
         </SafeAreaView>
     )

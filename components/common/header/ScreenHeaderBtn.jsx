@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, Image, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 
 import styles from "./screenheader.style";
 

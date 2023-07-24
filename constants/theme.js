@@ -1,18 +1,4 @@
-/*
-const COLORS = {
-  primary: "#3FA287",
-  secondary: "#404040",
-  tertiary: "#000",
 
-  red: "#B00000",
-
-  gray: "#83829A",
-  gray2: "#C1C0C8",
-
-  white: "#F3F4F8",
-  lightWhite: "#FAFAFC",
-};
-*/
 
 const COLORS = {
   primary: "#2BB276",

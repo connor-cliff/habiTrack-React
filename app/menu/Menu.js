@@ -1,16 +1,15 @@
 import React from 'react'
-import { useState } from "react";
 import { View, SafeAreaView } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import { MenuBtn, ScreenHeaderBtn } from "../../components";
-import { COLORS, icons, SIZES } from "../../constants";
+import { COLORS, icons} from "../../constants";
 import styles from "./menu.style";
 
 const Menu = () => {
+    // Get the "post" value from local search parameters using expo-router
     const { post } = useLocalSearchParams();
     const router = useRouter();
-    const [searchTerm, setSearchTerm] = useState("")
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -25,10 +24,8 @@ const Menu = () => {
                         dimension={"70%"}
                         handlePress={() => router.back()}
                     />
-                ),
-                }}
+                ),}}
             />
-            
             <View style={styles.wholeMenu}>
                 <View style={styles.container}>
                     <MenuBtn  
@@ -49,7 +46,9 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.user}
                         label="Friends"
-                        handleNavigate={() => router.push({pathname: 'friendship/Friends', params: { post: post }})}
+                        handleNavigate={() => router.push({
+                            pathname: 'friendship/Friends', 
+                            params: { post: post }})}
                         />
                 </View>
                 <View style={styles.container}>

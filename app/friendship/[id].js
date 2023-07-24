@@ -1,23 +1,23 @@
-import { Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Image } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
 
-import { ScreenHeaderBtn, FriendCard, HabitCard } from '../../components';
+import { ScreenHeaderBtn, HabitCard } from '../../components';
 import { COLORS, icons } from '../../constants';
 import styles from "./friendprofile.style";
-import useFetch from '../../hook/useFetch';
-
 
 const Friends = () => {
+// Get the "post" value from local search parameters using expo-router
   const { post } = useLocalSearchParams();
-  const [user, setUser] = useState("");
   const router = useRouter();
-  const error = false;
 
   const [habits, setHabits] = useState([]);
+  const [user, setUser] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const error = false;
 
 
+  // Fetch specific user database from the database 
   const fetchUser = () => {
     fetch(`http://localhost:8080/api/v1/user/${post}`)
     .then(res => res.json())
@@ -26,13 +26,7 @@ const Friends = () => {
     })
   };
 
-
-    // // gets habit data from the database
-    // useEffect(() => {
-    // fetchUser();
-    // },[ post ])
-
-    // gets habit data from the database
+    // gets user specific habit data from the database
     useEffect(() => {
         fetchUser()
         fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
@@ -56,8 +50,7 @@ const Friends = () => {
                         dimension={"70%"}
                         handlePress={() => router.back()}
                     />
-                ),
-                }}
+                ),}}
             />
 
             <View>
@@ -77,36 +70,38 @@ const Friends = () => {
             </View>
             <View style={styles.pageContainer}>
                 <View style={styles.habitContainer}>
-                        <View style={styles.header}>
-                            <Text style={styles.headerTitle}>Habits</Text>
-                        </View>
-                        <ScrollView showsVerticalScrollIndicator={false}>
-                        {refreshing ? (
-                            <ActivityIndicator size="large" color={COLORS.primary} />
-
-                            // checks for any errors 
-                        ) : error ? (
-                            <Text style={styles.text}>Something went wrong</Text>
-
-                            // renders placeholder if habits is empty 
-                        ) : habits.length === 0 ? (
-                            <Text style={styles.text}>This user currently has no habits to view</Text>
-                        ) : (
-
-                            // renders the HabitCard component for each habit 
-                            habits.map((item) => (
-                            <HabitCard 
-                                key={item.habitId}
-                                habit={item}
-                                handleNavigate={() => {}} 
-                                button={false}
-                            />
-                            )))}
-                        
-                        
-                        </ScrollView>
+                    <View style={styles.header}>
+                        <Text style={styles.headerTitle}>Habits</Text>
                     </View>
-               </View>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+
+                    {// Renders the friends habits if the conditions pass 
+                        refreshing ? (
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+
+                        // checks for any errors 
+                    ) : error ? (
+                        <Text style={styles.text}>Something went wrong</Text>
+
+                        // renders placeholder if habits is empty 
+                    ) : habits.length === 0 ? (
+                        <Text style={styles.text}>This user currently has no habits to view</Text>
+                    ) : (
+
+                        // renders the HabitCard component for each habit 
+                        habits.map((item) => (
+                        <HabitCard 
+                            key={item.habitId}
+                            habit={item}
+                            handleNavigate={() => {}} 
+                            button={false}
+                        />
+                        )))}
+                    
+                    
+                    </ScrollView>
+                </View>
+            </View>
     </SafeAreaView>
   )
 }

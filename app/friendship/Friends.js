@@ -5,10 +5,11 @@ import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { ScreenHeaderBtn, FriendCard } from '../../components';
 import { COLORS, icons } from '../../constants';
 import styles from "./friends.style";
-import useFetch from '../../hook/useFetch';
 
-
+// Filters users based on friendship status
 const filterUsersByFriendship = (friends, users, post) => {
+
+  // get userIDs from the user list
   const userIds = friends.reduce((acc, friend) => {
     acc.add(friend.user1Id);
     acc.add(friend.user2Id);
@@ -18,17 +19,15 @@ const filterUsersByFriendship = (friends, users, post) => {
   /*
    todo still includes the logged in user 
    */
+  // Removes those who are not friends with the logged in user and the user themselves from the list
   return users.filter((user) => user.userId !== post && userIds.has(user.userId));
 };
 
-
-
-
-
 const Friends = () => {
+ // Get the "post" value from local search parameters using expo-router
   const { post } = useLocalSearchParams();
-
   const router = useRouter();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [friends, setFriends] = useState([]);
   const [users, setUsers] = useState([]);
@@ -36,20 +35,19 @@ const Friends = () => {
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [noUsersFound, setNoUsersFound] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const user1Id = post;
-  const [user2Id, setUser2Id] = useState("");
   const error = false;
 
-
+  // filters users based on the searched name
   const filterUsersByName = () => {
     if (!searchTerm) {
       setFilteredUsers([]); // If search term is empty, clear the filteredUsers list
-      setSearchedUsers([]); // Clear the searchedUsers list
+      setSearchedUsers([]); // If search term is empty, clear the searchedUsers list
       setNoUsersFound(false);
       return;
     }
   
     const searched = users.filter((user) => {
+      // removes case from the name 
       return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
   
@@ -66,11 +64,8 @@ const Friends = () => {
     // Function to handle adding a friend
     const addFriend = (friendUserId) => {
 
+      // sets the friendship object
       const friendship = { user1Id: post, user2Id: friendUserId };
-
-      console.log("post" + post)
-      console.log("frienduserid" + friendUserId)
-      console.log("friendship" + friendship)
 
       // add the friendship to the database
       fetch('http://localhost:8080/api/v1/friendship', {
@@ -87,6 +82,7 @@ const Friends = () => {
         });
     };
 
+    // fetch friendship data from the database 
   const fetchFriends = () => {
     fetch(`http://localhost:8080/api/v1/friendship?userId=${post}`)
     .then(res => res.json())
@@ -95,6 +91,7 @@ const Friends = () => {
     })
   };
 
+    // fetch user data from the database 
   const fetchUsers = () => {
     fetch(`http://localhost:8080/api/v1/user`)
     .then(res => res.json())
@@ -103,20 +100,20 @@ const Friends = () => {
     })
   };
 
-    // gets habit data from the database
-    useEffect(() => {
-        fetchFriends();
-        fetchUsers();
-      },[ post ])
+  // Fetch friends and users data when the "post" parameter changes
+  useEffect(() => {
+      fetchFriends();
+      fetchUsers();
 
-    useEffect(() => {
-      // Filter users whenever friends or users change
-      const filtered = filterUsersByFriendship(friends, users, post);
-      filterUsersByName();
-      setFilteredUsers(filtered);
+    },[ post ])
 
-    }, [friends, users, post, searchTerm]);
+  // Filter users whenever friends, users, post, or searchTerm changes
+  useEffect(() => {
+    const filtered = filterUsersByFriendship(friends, users, post);
+    filterUsersByName();
+    setFilteredUsers(filtered);
 
+  }, [friends, users, post, searchTerm]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -131,13 +128,10 @@ const Friends = () => {
                         dimension={"70%"}
                         handlePress={() => router.back()}
                     />
-                ),
-                }}
+                  ),}}
             />
-
             <>
-             
-                 <View style={styles.pageContainer}>
+              <View style={styles.pageContainer}>
                   <View style={styles.container}>
                     <Text style={styles.title}>Friends</Text>
                   </View>
@@ -161,8 +155,7 @@ const Friends = () => {
                         style={styles.searchBtn} 
                         onPress={() => {
                             filterUsersByName();
-                          }}
-                        >
+                          }}>
                         <Image
                           source={icons.search}
                           resizeMode='contain'
@@ -172,15 +165,15 @@ const Friends = () => {
                     </View>
                   </View>
                 
-                  <View>
+                <View>
                   <View style={styles.friendContainer}>
                       <ScrollView showsVerticalScrollIndicator={false} style={styles.friendSearch}>
                       
-                        {// renders users found with the searched name
+                        {// Renders users found with the searched name
                           noUsersFound ? (
                         <Text style={styles.text}>No users found</Text>
                       ) : (
-
+                        // renders the FriendCard component for each found user 
                         searchedUsers.map((item) => (
                           <FriendCard
                             key={item.userId}
@@ -200,6 +193,7 @@ const Friends = () => {
                       <Text style={styles.fieldName}>Friends list</Text>
                     </View>
                       <ScrollView showsVerticalScrollIndicator={false}>
+
                     {refreshing ? (
                         <ActivityIndicator size="large" color={COLORS.primary} />
 
@@ -212,19 +206,21 @@ const Friends = () => {
                         <Text style={styles.text}>Search for friends to track habits together!</Text>
                     ) : (
 
-                        // renders the FriendCard component for each habit 
+                        // renders the FriendCard component for each friend 
                         filteredUsers.map((item) => (
                         <FriendCard 
                             key={item.userId}
                             friend={item}
-                            handlePress={() => router.push({pathname: `/friendship/${item.userId}`, params: { post: item.userId } })} 
+                            handlePress={
+                              () => router.push({
+                                pathname: `/friendship/${item.userId}`, 
+                                params: { post: item.userId } })} 
                             add={false}
                         />
                         )))}
                     </ScrollView>
                   </View>
                 </View>
-              
               </View>
             </>
     </SafeAreaView>

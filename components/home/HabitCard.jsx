@@ -6,11 +6,10 @@ import { icons } from "../../constants";
 const HabitCard = ({ habit, handleNavigate, button }) => {
 
   const handleButtonPress = () => {
-    // Update the streak 
+    // Increment the streak 
     const newStreak = habit.streak + 1;
 
- 
-
+    // fetches habit name and streak from database 
     fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?streak=${newStreak}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
@@ -35,9 +34,8 @@ const HabitCard = ({ habit, handleNavigate, button }) => {
         </Text>
         <Text style={styles.streak}>Score - {habit.streak}</Text>
       </View>
-
       <View>
-      { 
+      { // habits can only be edited if accessed from the home screen
         button ? (
           <View style={styles.iconPosition}>
 

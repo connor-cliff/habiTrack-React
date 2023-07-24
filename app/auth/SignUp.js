@@ -1,27 +1,26 @@
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import { Stack, useRouter, useSearchParams } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 import { ScreenHeaderBtn } from '../../components';
-import { COLORS, icons, SIZES } from '../../constants';
+import { COLORS, icons } from '../../constants';
 import styles from "./auth.style";
 
-
 const SignUp = () => {
-  const params = useSearchParams();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleSignup = () =>{
+  const handleSignup = () => {
 
     // Check if any field is left blank
     if (!name || !email || !pass) {
-      console.log('Please complete all fields'); // make an alert
+      console.log('Please complete all fields'); /* make this an alert */
       return;
     }
 
+    // Create a user object with the input values 
     const user = { name, email, pass }
 
     // Save data to the database
@@ -30,6 +29,8 @@ const SignUp = () => {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(user)
     })
+
+    // Navigate to the home page after a succesful signup
     router.push('/')
 };
 

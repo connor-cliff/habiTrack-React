@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./friendcard.style";
 import { icons } from "../../constants";
 
+// Creates the friend card with the appropriate data
 const FriendCard = ({ friend, handlePress, add }) => {
 
   return (
@@ -21,7 +22,7 @@ const FriendCard = ({ friend, handlePress, add }) => {
           </Text>
         </View>
 
-        { // switches between add friend and view profile
+        { // switches between add friend and view profile formats
           add ? (         
         <View style={styles.buttonContainer}>
           <View style={styles.addButtonWrapper}>
