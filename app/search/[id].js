@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, TouchableOpacity, View } from 'react-native'
-import { Stack, useRouter, useSearchParams } from 'expo-router'
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
 import { Text, SafeAreaView } from 'react-native'
 
 import { ScreenHeaderBtn, NearbyJobCard } from '../../components'
@@ -9,34 +9,13 @@ import styles from './search.styles'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const FriendSearch = () => {
-    const params = useSearchParams();
-    const router = useRouter()
+    const { post } = useLocalSearchParams();
 
-    const [searchResult, setSearchResult] = useState([]);
-    const [searchLoader, setSearchLoader] = useState(false);
-    const [searchError, setSearchError] = useState(null);
-    const [page, setPage] = useState(1);
+    const router = useRouter();
 
-    const handleSearch = async () => {
-        setSearchLoader(true);
-        setSearchResult([])
-
-    };
-
-    const handlePagination = (direction) => {
-        if (direction === 'left' && page > 1) {
-            setPage(page - 1)
-            handleSearch()
-        } else if (direction === 'right') {
-            setPage(page + 1)
-            handleSearch()
-        }
-    }
-/*
-    useEffect(() => {
-        handleSearch()
-    }, [])
-*/
+    const [refreshing, setRefreshing] = useState(false);
+    const error = false;
+  
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
@@ -46,67 +25,52 @@ const FriendSearch = () => {
                     headerLeft: () => (
                         <ScreenHeaderBtn
                             iconUrl={icons.left}
-                            dimension='60%'
+                            dimension={"70%"}
                             handlePress={() => router.back()}
                         />
                     ),
                     headerTitle: "",
                 }}
             />
-            <ScrollView>
-                <FlatList
-                    data={searchResult}
-                    renderItem={({ item }) => (
-                        <NearbyJobCard
-                            job={item}
-                            handleNavigate={() => router.push(`/job-details/${item.job_id}`)}
-                        />
-                    )}
-                    keyExtractor={(item) => item.job_id}
-                    contentContainerStyle={{ padding: SIZES.medium, rowGap: SIZES.medium }}
-                    ListHeaderComponent={() => (
-                        <>
-                            <View style={styles.container}>
-                                <Text style={styles.searchTitle}>{params.id}</Text>
-                                <Text style={styles.noOfSearchedJobs}>Search results</Text>
-                            </View>
-                            <View style={styles.loaderContainer}>
-                            <Text>There are no registered users with that name</Text>
-                            </View>
-                        </>
-                    )}
+            <>
+            <View style={styles.pageContainer}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Showing results for: </Text>
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.text}>{post}</Text>
+                </View>
+            </View>
+            </>
+
+            <View style={styles.pageContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {refreshing ? (
+                    <ActivityIndicator size="large" color={COLORS.primary} />
+
+                    // checks for any errors 
+                ) : error ? (
+                    <Text style={styles.text}>Something went wrong</Text>
+
+                    // renders placeholder if friends is empty 
+                ) : post.length === 0 ? (
+                    <Text style={styles.text}>Search for friends to track habits together!</Text>
+                ) : (
+
+                    // renders the FriendCard component for each habit 
+                    post.map((item, index) => (
+                    <FriendCard 
+                        key={item.userId}
+                        friend={item}
+                        handleNavigate={() => router.push({pathname: `/friends/${item.id}`, params: { post: item.id } })} 
+
+                    />
+                    )))}
                     
-                />
-            </ScrollView>
-            <FlatList 
-                ListFooterComponent={() => (
-                        <View style={styles.footerContainer}>
-                            <TouchableOpacity
-                                style={styles.paginationButton}
-                                onPress={() => handlePagination('left')}
-                            >
-                                <Image
-                                    source={icons.chevronLeft}
-                                    style={styles.paginationImage}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                            <View style={styles.paginationTextBox}>
-                                <Text style={styles.paginationText}>{page}</Text>
-                            </View>
-                            <TouchableOpacity
-                                style={styles.paginationButton}
-                                onPress={() => handlePagination('right')}
-                            >
-                                <Image
-                                    source={icons.chevronRight}
-                                    style={styles.paginationImage}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-            />
+                
+                </ScrollView>
+            </View>
+
         </SafeAreaView>
     )
 }

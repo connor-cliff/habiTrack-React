@@ -1,3 +1,4 @@
+
 import { StyleSheet } from "react-native";
 
 import { COLORS, FONT, SIZES } from "../../constants";
@@ -61,6 +62,21 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     marginTop: 15,
     marginBottom: 10,
+  },
+  text : {
+    fontFamily: FONT.bold,
+    fontSize: SIZES.xLarge,
+    color: COLORS.primary,
+    marginTop: 10,
+    textAlign: "center"
+  },
+  friendSearch: {
+    marginTop: 20
+  },
+  iconImage: {
+    alignContent: "center",
+    width: "100%",
+    height: "100%",
   },
 });
 

@@ -17,34 +17,31 @@ const App = () => {
   const [error, setError] = useState("");
   const { data } = useFetch('user', {userId: params.id});
 
+
+  global.ip = "192.168.0.23";
+
   const handleLogin = () => {
 
-    //console.log(data);
+    const userExists = data.some((d) => d.email === email && d.pass === pass);
+
     if (!email || !pass) {
       console.log('Please complete all fields'); // You can also show an alert
       return;
     }
 
-    const userExists = data.some((d) => d.email === email && d.pass === pass);
-    const loggedInUser = data.find((d) => d.email === email && d.pass === pass);
-    const loggedInUserId = loggedInUser.userId;
-    // const loggedInUserName = loggedInUser.name;
-
-    global.currentUserId = loggedInUserId;
-    global.currentUsersName = loggedInUser.name;
-
-
-    /**
-     * 
-     * i need to get the correct user ID fro mthe user who is logging ing. i will thene use this ID to search all existing habits and only show those which hvae the matchng userID
-     * 
-     */
-
     if (userExists) {
-      //console.log('User exists');
+      const loggedInUser = data.find((d) => d.email === email && d.pass === pass);
+      const loggedInUserId = loggedInUser.userId;
+      // const loggedInUserName = loggedInUser.name;
+  
+      global.currentUserId = loggedInUserId;
+      global.currentUsersName = loggedInUser.name;
+
       // Handle successful login 
       router.push({pathname: '/home/Home', params: { post: loggedInUserId }}); 
+
     } else {
+
       console.log('Invalid email or password'); // You can also show an alert
     }
   };
@@ -101,7 +98,7 @@ const App = () => {
                       </TouchableOpacity>
                     </View>
                     <View style={styles.buttonWrapper}>
-                    <TouchableOpacity onPress={() => router.push('auth/sign-up/SignUp')}>
+                    <TouchableOpacity onPress={() => router.push('auth/SignUp')}>
                         <Text style={styles.buttonText}>Go to sign Up</Text>
                       </TouchableOpacity>
                     </View>

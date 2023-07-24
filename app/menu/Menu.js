@@ -1,14 +1,14 @@
 import React from 'react'
 import { useState } from "react";
 import { View, SafeAreaView } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import { MenuBtn, ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
 import styles from "./menu.style";
 
 const Menu = () => {
-    
+    const { post } = useLocalSearchParams();
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState("")
 
@@ -34,7 +34,7 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.home}
                         label="Home"
-                        handleNavigate={() => router.push(`/home/Home/?post=${global.currentUserId}`)}
+                        handleNavigate={() => router.push(`/home/Home/?post=${post}`)}
                         />
                 </View>
                 <View style={styles.container}>
@@ -42,13 +42,14 @@ const Menu = () => {
                         icon={icons.plus}
                         label="Add habit"
                         handleNavigate={() => router.push('habits/AddHabit')}
+                         
                         />
                 </View>
                 <View style={styles.container}>
                     <MenuBtn  
                         icon={icons.user}
                         label="Friends"
-                        handleNavigate={() => router.push('friends/Friends')}
+                        handleNavigate={() => router.push({pathname: 'friendship/Friends', params: { post: post }})}
                         />
                 </View>
                 <View style={styles.container}>

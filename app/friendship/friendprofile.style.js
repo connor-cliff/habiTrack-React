@@ -4,11 +4,14 @@ import { COLORS, FONT, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
   pageContainer: {
-      width: "95%",
-      paddingLeft: 25
+    flex: 1,
+    width: "95%",
+    paddingLeft: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
-    width: "100%",
+    width: "95%",
   },
   friendContainer : {
     height: "100%"
@@ -18,7 +21,36 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xLarge,
     color: COLORS.primary,
     marginTop: 2,
+    marginLeft: 20,
     margineBottom: 2
+  },
+  name: {
+    fontFamily: FONT.bold,
+    fontSize: SIZES.xLarge,
+    color: COLORS.secondary,
+    marginTop: 2,
+    marginLeft: 2,
+    margineBottom: 2,
+  },
+  nameContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+    habitContainer: {
+    marginTop: SIZES.medium,
+    height: "100%",
+    width: "100%"
+  },
+    header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: SIZES.small,
+  },
+    headerTitle: {
+    fontSize: SIZES.large,
+    fontFamily: FONT.medium,
+    color: COLORS.secondary,
   },
   searchContainer: {
     justifyContent: "center",
@@ -65,10 +97,23 @@ const styles = StyleSheet.create({
   text : {
     fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    color: COLORS.secondary,
+    color: COLORS.primary,
     marginTop: 10,
-
+    textAlign: "center"
   },
+  friendSearch: {
+    marginTop: 20
+  },
+  iconImage: {
+    tintColor: COLORS.primary,
+    height: 115,
+    width: 115
+  },
+  profileContainer: { 
+
+  }
 });
 
 export default styles;
+
+

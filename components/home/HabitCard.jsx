@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./habitcard.style";
 import { icons } from "../../constants";
 
-const HabitCard = ({ habit, handleNavigate }) => {
+const HabitCard = ({ habit, handleNavigate, button }) => {
 
   const handleButtonPress = () => {
     // Update the streak 
@@ -16,7 +16,7 @@ const HabitCard = ({ habit, handleNavigate }) => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ streak: newStreak })
     })
-    //console.log(habit.habitId)
+
 };
 
   return (
@@ -36,17 +36,23 @@ const HabitCard = ({ habit, handleNavigate }) => {
         <Text style={styles.streak}>Score - {habit.streak}</Text>
       </View>
 
-      <View >
-        <View style={styles.iconPosition}>
-        {/* this button should just increment and not take the user anywhere  */}
-          <TouchableOpacity style={styles.btn} onPress={handleButtonPress}>
-            <Image
-              source={icons.plus}
-              resizeMode='contain'
-              style={styles.btnImage}
-            />
-        </TouchableOpacity>
-       </View>
+      <View>
+      { 
+        button ? (
+          <View style={styles.iconPosition}>
+
+            <TouchableOpacity style={styles.btn} onPress={handleButtonPress}>
+              <Image
+                source={icons.plus}
+                resizeMode='contain'
+                style={styles.btnImage}
+              />
+            </TouchableOpacity>
+          </View>
+       ) : (
+        <View />
+      )}
+
     </View>
 
     </TouchableOpacity>

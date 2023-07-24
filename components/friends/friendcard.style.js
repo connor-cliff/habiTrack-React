@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: SIZES.medium,
   },
-  habitName: {
+  friendName: {
     fontSize: SIZES.medium,
     fontFamily: "DMBold",
     color: COLORS.secondary,
@@ -62,11 +62,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 35,
   },
+  addButtonWrapper: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: SIZES.xSmall,
+    height: "70%",
+  },
   buttonWrapper: {
     flex: 1,
     marginLeft: 10,
     marginRight: 10,
-    backgroundColor: COLORS.red,
+    backgroundColor: COLORS.secondary,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.xSmall,

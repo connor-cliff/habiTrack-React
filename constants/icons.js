@@ -20,6 +20,7 @@ import user from '../assets/icons/user.png'
 import home from '../assets/icons/home.png'
 import logout from '../assets/icons/logout.png'
 import refresh from '../assets/icons/refresh.png'
+import userlarge from '../assets/icons/userlarge.png'
 
 export default {
   heart,
@@ -43,5 +44,6 @@ export default {
   user,
   home,
   logout,
-  refresh
+  refresh,
+  userlarge
 };
