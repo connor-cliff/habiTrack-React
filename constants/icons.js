@@ -10,6 +10,8 @@ import home from '../assets/icons/home.png'
 import logout from '../assets/icons/logout.png'
 import refresh from '../assets/icons/refresh.png'
 import userlarge from '../assets/icons/userlarge.png'
+import battlelarge from '../assets/icons/battlelarge.png'
+import battle from '../assets/icons/battle.png'
 
 export default {
   menu,
@@ -24,4 +26,6 @@ export default {
   logout,
   refresh,
   userlarge,
+  battle,
+  battlelarge
 };

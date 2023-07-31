@@ -22,7 +22,7 @@ const Menu = () => {
                     <ScreenHeaderBtn 
                         icon={icons.left}
                         dimension={"70%"}
-                        handlePress={() => router.back()}
+                        handlePress={() => router.push(`/home/Home/?post=${post}`)}
                     />
                 ),}}
             />
@@ -48,6 +48,15 @@ const Menu = () => {
                         label="Friends"
                         handleNavigate={() => router.push({
                             pathname: 'friendship/Friends', 
+                            params: { post: post }})}
+                        />
+                </View>
+                <View style={styles.container}>
+                    <MenuBtn  
+                        icon={icons.battle}
+                        label="Challenges"
+                        handleNavigate={() => router.push({
+                            pathname: 'challenges/Challenges', 
                             params: { post: post }})}
                         />
                 </View>

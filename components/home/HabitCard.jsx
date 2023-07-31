@@ -5,6 +5,16 @@ import { icons } from "../../constants";
 
 const HabitCard = ({ habit, handleNavigate, button }) => {
 
+  const getIcon = () => {
+        // Check if the habit is a challenge
+        if (habit.name === "Daily walk for 30 days" || habit.name === "Meditation challenge" || habit.name === "Water challenge") {
+          // renders the correct icon
+          return icons.battle;
+        } else {
+          return icons.leaf;
+        }
+  }
+
   const handleButtonPress = () => {
     // Increment the streak 
     const newStreak = habit.streak + 1;
@@ -22,7 +32,7 @@ const HabitCard = ({ habit, handleNavigate, button }) => {
     <TouchableOpacity style={styles.container} onPress={handleNavigate}>
       <View style={styles.iconContainer}>
         <Image
-          source={icons.leaf}
+          source={getIcon()}
           resizeMode='contain'
           style={styles.iconImage}
         />

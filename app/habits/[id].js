@@ -149,7 +149,7 @@ const handleSave = () => {
 
                   <View>
                     <View>
-                      <Text style={styles.fieldName}>Streak</Text>
+                      <Text style={styles.fieldName}>Score</Text>
                     </View>
                     <View style={styles.inputContainer}>
                       <View style={styles.inputWrapper}>

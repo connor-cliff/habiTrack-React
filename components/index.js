@@ -11,11 +11,15 @@ import MenuBtn from "./menu/MenuBtn";
 // friend screen
 import FriendCard from './friends/FriendCard'
 
+// challenge screen
+import ChallengeCard from './challenges/ChallengeCard'
+
 export {
   FriendCard,
   ScreenHeaderBtn,
   HabitCard,
   Footer,
   MenuBtn,
+  ChallengeCard
 
 };

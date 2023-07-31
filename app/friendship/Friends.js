@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import { ScreenHeaderBtn, FriendCard } from '../../components';
@@ -9,6 +9,9 @@ import styles from "./friends.style";
 // Filters users based on friendship status
 const filterUsersByFriendship = (friends, users, post) => {
 
+  // Convert post to an integer 
+  const postInt = parseInt(post, 10);
+
   // get userIDs from the user list
   const userIds = friends.reduce((acc, friend) => {
     acc.add(friend.user1Id);
@@ -16,11 +19,9 @@ const filterUsersByFriendship = (friends, users, post) => {
     return acc;
   }, new Set());
 
-  /*
-   todo still includes the logged in user 
-   */
   // Removes those who are not friends with the logged in user and the user themselves from the list
-  return users.filter((user) => user.userId !== post && userIds.has(user.userId));
+  return users.filter((user) => user.userId !== postInt && userIds.has(user.userId));
+
 };
 
 const Friends = () => {
@@ -82,6 +83,24 @@ const Friends = () => {
         });
     };
 
+    // Updates the home page after a refresh
+    const handleRefresh = () => {
+      setRefreshing(true);
+      // change to ip and add a note in the readme?
+      fetch(`http://localhost:8080/api/v1/friendship?userId=${post}`)
+        .then(res => res.json())
+        .then(result => {
+          setFriends(result);
+
+          setRefreshing(false);
+        })
+        .catch(error => {
+          console.error("Error refreshing data:", error);
+          setRefreshing(false);
+        });
+    };
+
+
     // fetch friendship data from the database 
   const fetchFriends = () => {
     fetch(`http://localhost:8080/api/v1/friendship?userId=${post}`)
@@ -126,9 +145,17 @@ const Friends = () => {
                     <ScreenHeaderBtn 
                         icon={icons.left}
                         dimension={"70%"}
-                        handlePress={() => router.back()}
+                        handlePress={() => router.push(`/menu/Menu/?post=${post}`)}
                     />
-                  ),}}
+                  ),
+                    headerRight: () => (
+                        <ScreenHeaderBtn 
+                        icon={icons.refresh} 
+                        dimension="130%"
+                        handlePress={handleRefresh}
+                        />
+                    ),
+                  }}
             />
             <>
               <View style={styles.pageContainer}>

@@ -22,23 +22,32 @@ const FriendCard = ({ friend, handlePress, add }) => {
           </Text>
         </View>
 
-        { // switches between add friend and view profile formats
-          add ? (         
+          {// switches friend card button 
+            add === true ? ( 
         <View style={styles.buttonContainer}>
           <View style={styles.addButtonWrapper}>
             <TouchableOpacity onPress={handlePress}>
-            <Text style={styles.buttonText}>Add friend</Text>
-          </TouchableOpacity>
+              <Text style={styles.buttonText}>Add friend</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View> 
-      ) : (
+      ) : add === false ? (
         <View style={styles.buttonContainer}>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={handlePress}>
-            <Text style={styles.buttonText}>View profile</Text>
-          </TouchableOpacity>
+              <Text style={styles.buttonText}>View profile</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View> 
+      ) : (
+        // You can add a different option here for when `add` is null
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity onPress={handlePress}>
+              <Text style={styles.buttonText}>Select friend</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       )}
 
     </View>
