@@ -23,9 +23,7 @@ const App = () => {
     // checks mandatory fields have been compeleted
     if (!email || !pass) {
       console.log('Please complete all fields'); 
-      /* 
-      You can also show an alert
-       */
+ 
       return;
     }
 
@@ -45,9 +43,7 @@ const App = () => {
     } else {
 
       console.log('Invalid email or password'); 
-      /* 
-      You can also show an alert
-       */
+
     }
   };
 

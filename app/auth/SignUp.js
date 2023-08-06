@@ -16,7 +16,7 @@ const SignUp = () => {
 
     // Check if any field is left blank
     if (!name || !email || !pass) {
-      console.log('Please complete all fields'); /* make this an alert */
+      console.log('Please complete all fields'); 
       return;
     }
 

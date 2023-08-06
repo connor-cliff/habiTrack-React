@@ -22,9 +22,7 @@ const AddHabit = ({}) => {
     // Check if name is left blank
     if (!name) {
       console.log('Please add a name'); 
-      /* 
-      make an alert 
-      */
+
       return;
     }
 

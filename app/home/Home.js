@@ -15,14 +15,10 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(false);
     const error = false;
 
-    /**
-     * this refresh works on its own so now i need to just figure out a way to pass it to the footer button
-     *  */ 
-
     // Updates the home page after a refresh
     const handleRefresh = () => {
         setRefreshing(true);
-        // change to ip and add a note in the readme?
+
         fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
           .then(res => res.json())
           .then(result => {

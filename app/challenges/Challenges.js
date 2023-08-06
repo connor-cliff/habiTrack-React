@@ -37,9 +37,7 @@ const Challenges = () => {
     const [reminder, setReminder] = useState('');
     const streak = 0;
 
-console.log(selectedChallenge)
-
-    // Define the challenges array
+    // Define the challenges array with example challenges
     const challenges = [
         {
             name: "Daily walk for 30 days",

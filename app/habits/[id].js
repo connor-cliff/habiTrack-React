@@ -80,7 +80,7 @@ const handleSave = () => {
     if (data && data.length > 0) {
       const habitIndex = data.findIndex((habit) => habit.habitId === currentId);
       if (habitIndex !== -1) {
-        // Habit found, set the state 
+        // Habit found, sets the state 
         setHabit(data[habitIndex]);
         setName(data[habitIndex].name);
         setDescription(data[habitIndex].description);

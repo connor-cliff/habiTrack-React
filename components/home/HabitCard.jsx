@@ -8,7 +8,7 @@ const HabitCard = ({ habit, handleNavigate, button }) => {
   const getIcon = () => {
         // Check if the habit is a challenge
         if (habit.name === "Daily walk for 30 days" || habit.name === "Meditation challenge" || habit.name === "Water challenge") {
-          // renders the correct icon
+          // renders the correct icon for challenges
           return icons.battle;
         } else {
           return icons.leaf;

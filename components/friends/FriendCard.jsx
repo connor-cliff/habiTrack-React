@@ -22,7 +22,7 @@ const FriendCard = ({ friend, handlePress, add }) => {
           </Text>
         </View>
 
-          {// switches friend card button 
+          {// switches friend card button depending on purpose
             add === true ? ( 
         <View style={styles.buttonContainer}>
           <View style={styles.addButtonWrapper}>
@@ -40,7 +40,7 @@ const FriendCard = ({ friend, handlePress, add }) => {
           </View>
         </View>
       ) : (
-        // You can add a different option here for when `add` is null
+        // for add = null
         <View style={styles.buttonContainer}>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={handlePress}>

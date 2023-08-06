@@ -48,7 +48,7 @@ const Friends = () => {
     }
   
     const searched = users.filter((user) => {
-      // removes case from the name 
+      // removes potential case from the name 
       return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
   
@@ -86,7 +86,7 @@ const Friends = () => {
     // Updates the home page after a refresh
     const handleRefresh = () => {
       setRefreshing(true);
-      // change to ip and add a note in the readme?
+      
       fetch(`http://localhost:8080/api/v1/friendship?userId=${post}`)
         .then(res => res.json())
         .then(result => {
