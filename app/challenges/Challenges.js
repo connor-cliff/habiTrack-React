@@ -25,9 +25,11 @@ const filterUsersByFriendship = (friends, users, post) => {
   };
 
 const Challenges = () => {
-    // Get the "post" value from local search parameters using expo-router
-    const { post } = useLocalSearchParams();
+    // Get the params value from local search parameters using expo-router
+    const params = useLocalSearchParams();
     const router = useRouter();
+    const post = params.post;
+    const uName = params.uName;
 
     const [friends, setFriends] = useState([]);
     const [users, setUsers] = useState([]);
@@ -53,6 +55,9 @@ const Challenges = () => {
         },
 
     ];
+
+    const handleRefresh = params.handleRefresh;
+
 
     // handles the challenge creation oncee a user selects a friend
     const handlePress = ( id ) => {
@@ -89,8 +94,15 @@ const Challenges = () => {
             body: JSON.stringify (user2Challenge),
             })
     
+        
+        //refreshes habit data on the home page after adding a challenge
+        handleRefresh;
+
         // Navigate to the Home screen with the updated user data
-        router.push(`/home/Home/?post=${post}`);
+        router.push({
+            pathname: `/home/Home`,
+            params: { post: post, uName: uName}
+        })
     };
 
     const handleChallengeCardPress = (challenge) => {
