@@ -38,6 +38,7 @@ const Friends = () => {
   const [refreshing, setRefreshing] = useState(false);
   const error = false;
 
+
   // filters users based on the searched name
   const filterUsersByName = () => {
     if (!searchTerm) {
@@ -76,6 +77,7 @@ const Friends = () => {
         },
         body: JSON.stringify(friendship),
       })
+      .then(() => handleRefresh())
 
         .catch((error) => {
           // Handle any errors
@@ -83,7 +85,7 @@ const Friends = () => {
         });
     };
 
-    // Updates the home page after a refresh
+    // Updates the friendship data after a refresh
     const handleRefresh = () => {
       setRefreshing(true);
       
@@ -148,13 +150,7 @@ const Friends = () => {
                         handlePress={() => router.push(`/menu/Menu/?post=${post}`)}
                     />
                   ),
-                    headerRight: () => (
-                        <ScreenHeaderBtn 
-                        icon={icons.refresh} 
-                        dimension="130%"
-                        handlePress={handleRefresh}
-                        />
-                    ),
+
                   }}
             />
             <>

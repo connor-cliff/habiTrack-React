@@ -1,5 +1,5 @@
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
 import { ScreenHeaderBtn } from '../../components';
@@ -7,6 +7,7 @@ import { COLORS, icons } from '../../constants';
 import styles from "./auth.style";
 
 const SignUp = () => {
+  const params = useLocalSearchParams();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,6 +30,9 @@ const SignUp = () => {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(user)
     })
+
+    // refresh user data with new user
+    params.handleRefresh
 
     // Navigate to the home page after a succesful signup
     router.push('/')

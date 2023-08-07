@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./habitcard.style";
 import { icons } from "../../constants";
 
-const HabitCard = ({ habit, handleNavigate, button }) => {
+const HabitCard = ({ habit, handleNavigate, button, refresh }) => {
 
   const getIcon = () => {
         // Check if the habit is a challenge
@@ -16,20 +16,29 @@ const HabitCard = ({ habit, handleNavigate, button }) => {
   }
 
   const handleButtonPress = () => {
-    // Increment the streak 
+    // Increment the streak
     const newStreak = habit.streak + 1;
 
-    // fetches habit name and streak from database 
+    // fetches habit name and streak from the database
     fetch(`http://localhost:8080/api/v1/habit/${habit.habitId}?streak=${newStreak}`, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ streak: newStreak })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ streak: newStreak }),
     })
-
-};
+      .then(() => {
+        // If the PUT request is successful, call the refresh function
+        refresh();
+      })
+      .catch((error) => {
+        console.error("Error updating streak:", error);
+      });
+  };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleNavigate}>
+    <TouchableOpacity style={styles.container} onPress={() => {
+      handleNavigate();
+      refresh(); 
+    }}>
       <View style={styles.iconContainer}>
         <Image
           source={getIcon()}

@@ -14,6 +14,8 @@ const EditHabit = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const { data } = useFetch('habit', { habitId: params.id },)
+  const uid = params.uid;
+  const uName = params.uName;
 
   const [habit, setHabit] = useState({});
   const [name, setName] = useState('');
@@ -21,6 +23,11 @@ const EditHabit = () => {
   const [streak, setStreak] = useState(0);
   const [reminder, setReminder] = useState('');
   const currentId = parseInt(params.id);
+
+  // refreshes habits after deletion
+  const handleRefresh = () => {
+    params.handleRefresh;
+  }
 
   // Handled the "Complete" button click, updating the habit in the database
 const handleSave = () => {
@@ -37,8 +44,11 @@ const handleSave = () => {
         })
 
         // Redirect to the Home screen after saving changes
-        router.push(`/home/Home/?post=${global.currentUserId}`);
+        router.push({
+          pathname: `/home/Home`, 
+          params: { post: uid, uName: uName }});
 
+    
       } else {
 
         // if reminder is also being changed then it is updated here because otherwise LocalTime variables cannot be null
@@ -49,7 +59,10 @@ const handleSave = () => {
         })
 
         // Redirect to the Home screen after saving changes
-          router.push(`/home/Home/?post=${global.currentUserId}`);
+          router.push({
+            pathname: `/home/Home`, 
+            params: { post: uid, uName: uName }});
+          
       }
     };
 
@@ -65,8 +78,8 @@ const handleSave = () => {
         })
         .then(response => {
           router.push({
-            pathname: `/home/Home/?post=${global.currentUserId}`, 
-            params: { post1: currentId }});
+            pathname: `/home/Home`, 
+            params: { post: uid, uName: uName }});
        
         })
         .catch(error => {
@@ -80,7 +93,7 @@ const handleSave = () => {
     if (data && data.length > 0) {
       const habitIndex = data.findIndex((habit) => habit.habitId === currentId);
       if (habitIndex !== -1) {
-        // Habit found, sets the state 
+        // Habit found, set the state 
         setHabit(data[habitIndex]);
         setName(data[habitIndex].name);
         setDescription(data[habitIndex].description);
@@ -192,7 +205,10 @@ const handleSave = () => {
                     </View>
                     <View style={styles.buttonContainer}>
                       <View style={styles.buttonWrapper}>
-                        <TouchableOpacity onPress={handleDelete}>
+                        <TouchableOpacity onPress={() => {
+                          handleDelete();
+                          handleRefresh();
+                        }}>
                         <Text style={styles.buttonText}>DELETE</Text>
                       </TouchableOpacity>
                     </View>

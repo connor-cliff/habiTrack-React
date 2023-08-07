@@ -8,8 +8,14 @@ import styles from "./menu.style";
 
 const Menu = () => {
     // Get the "post" value from local search parameters using expo-router
-    const { post } = useLocalSearchParams();
+    const params = useLocalSearchParams();
     const router = useRouter();
+
+    const post = params.post;
+    const uName = params.uName;
+    
+    const handleRefresh = params.handleRefresh;
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -22,7 +28,11 @@ const Menu = () => {
                     <ScreenHeaderBtn 
                         icon={icons.left}
                         dimension={"70%"}
-                        handlePress={() => router.push(`/home/Home/?post=${post}`)}
+                        handlePress={() => 
+                        router.push({
+                            pathname: `/home/Home`,
+                            params: { post: post, uName: uName}
+                        })}
                     />
                 ),}}
             />
@@ -31,14 +41,20 @@ const Menu = () => {
                     <MenuBtn  
                         icon={icons.home}
                         label="Home"
-                        handleNavigate={() => router.push(`/home/Home/?post=${post}`)}
+                        handleNavigate={() => 
+                            router.push({
+                            pathname: `/home/Home`,
+                            params: { post: post, uName: uName}
+                        })}
                         />
                 </View>
                 <View style={styles.container}>
                     <MenuBtn  
                         icon={icons.plus}
                         label="Add habit"
-                        handleNavigate={() => router.push('habits/AddHabit')}
+                        handleNavigate={() => router.push({
+                            pathname: `/habits/AddHabit`,
+                            params: { uid: post, uName: uName, handleRefresh }})}
                          
                         />
                 </View>
@@ -56,8 +72,8 @@ const Menu = () => {
                         icon={icons.battle}
                         label="Challenges"
                         handleNavigate={() => router.push({
-                            pathname: 'challenges/Challenges', 
-                            params: { post: post }})}
+                            pathname: '/challenges/Challenges', 
+                            params: { post: post, uName: uName, handleRefresh }})}
                         />
                 </View>
                 <View style={styles.container}>

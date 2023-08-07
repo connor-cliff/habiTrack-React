@@ -1,5 +1,5 @@
 import { Text, View, SafeAreaView, TextInput } from 'react-native';
-import { Stack, useRouter} from 'expo-router';
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
 import { Footer, ScreenHeaderBtn } from '../../components';
@@ -8,7 +8,10 @@ import styles from "../habits/habits.style";
 
 const AddHabit = ({}) => {
 
+  const params = useLocalSearchParams() 
   const router = useRouter();
+  const uid = params.uid;
+  const uName = params.uName;
 
   const [userId, setUserId] = useState('');
   const [name, setName] = useState('');
@@ -26,11 +29,8 @@ const AddHabit = ({}) => {
       return;
     }
 
-    // Convert the global currentUserId to an integer and update the userId state
-    setUserId(parseInt(global.currentUserId))
-
     // Use the updated userId value after setUserId is processed
-    const habit = { userId: parseInt(global.currentUserId), name, description, reminder, streak }
+    const habit = { userId: uid, name, description, reminder, streak }
 
     // Save data to the database
     fetch("http://localhost:8080/api/v1/habit",{
@@ -40,7 +40,10 @@ const AddHabit = ({}) => {
     })
 
     // Navigate to the Home screen with the updated user data
-    router.push(`/home/Home/?post=${global.currentUserId}`);
+    router.push({
+      pathname: `/home/Home`, 
+      params: { post: uid, uName: uName }});
+
 };
 
   return (

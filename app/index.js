@@ -1,19 +1,38 @@
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { COLORS } from '../constants';
 import styles from "./auth/auth.style";
 import useFetch from '../hook/useFetch'; 
 
 const App = () => {
-  // Get the "post" value from local search parameters using expo-router
-  const params = useLocalSearchParams();
 
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const { data } = useFetch('user', {userId: params.id});
+  const [data, setData] = useState([]);
+
+  const [refreshing, setRefreshing] = useState(false);
+  const error = false;
+
+  // Updates the user information after signup 
+  const handleRefresh = () => {
+    setRefreshing(true);
+
+    fetch(`http://localhost:8080/api/v1/user`)
+      .then(res => res.json())
+      .then(result => {
+        
+        setData(result)
+
+        setRefreshing(false);
+      })
+      .catch(error => {
+        console.error("Error refreshing data:", error);
+        setRefreshing(false);
+      });
+  };
 
   const handleLogin = () => {
 
@@ -31,14 +50,16 @@ const App = () => {
     if (userExists) {
       const loggedInUser = data.find((d) => d.email === email && d.pass === pass);
       const loggedInUserId = loggedInUser.userId;
+      const loggedInUserName = loggedInUser.name;
   
+      ////// remove remove remove
       global.currentUserId = loggedInUserId;
       global.currentUsersName = loggedInUser.name;
 
       // Take user to their home page
       router.push({
         pathname: '/home/Home', 
-        params: { post: loggedInUserId }}); 
+        params: { post: loggedInUserId, uName: loggedInUserName }}); 
 
     } else {
 
@@ -47,6 +68,9 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    handleRefresh();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -99,7 +123,9 @@ const App = () => {
                       </TouchableOpacity>
                     </View>
                     <View style={styles.buttonWrapper}>
-                    <TouchableOpacity onPress={() => router.push('auth/SignUp')}>
+                    <TouchableOpacity onPress={() => router.push({
+                      pathname: 'auth/SignUp',
+                      params: { handleRefresh }})}>
                         <Text style={styles.buttonText}>Go to sign Up</Text>
                       </TouchableOpacity>
                     </View>

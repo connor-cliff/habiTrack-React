@@ -7,19 +7,22 @@ import { COLORS, icons, SIZES } from '../../constants';
 import { HabitCard, Footer, ScreenHeaderBtn } from '../../components';
 
 const Home = () => {
-    // Get the "post" value from local search parameters using expo-router
-    const { post } = useLocalSearchParams();
+    // Get the params values from local search parameters using expo-router
+    const params = useLocalSearchParams();
     const router = useRouter();
+    const uid = params.post;
+    const uName = params.uName;
+
 
     const [habits, setHabits] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const error = false;
 
-    // Updates the home page after a refresh
+    // Updates the habit data after a refresh
     const handleRefresh = () => {
         setRefreshing(true);
 
-        fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
+        fetch(`http://localhost:8080/api/v1/habit?userId=${params.post}`)
           .then(res => res.json())
           .then(result => {
             setHabits(result);
@@ -35,13 +38,13 @@ const Home = () => {
       
     // fetchs user specific habit data from the database
     useEffect(() => {
-        fetch(`http://localhost:8080/api/v1/habit?userId=${post}`)
+        fetch(`http://localhost:8080/api/v1/habit?userId=${params.post}`)
         .then(res => res.json())
         .then((result) => {
         // Filter the habits by userId before setting into state
             setHabits(result);
             
-        })},[ post ])
+        })},[ params ])
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -54,24 +57,18 @@ const Home = () => {
                         icon={icons.menu} 
                         dimension="130%"
                         handlePress={() => router.push({
-                            pathname: 'menu/Menu', 
-                            params:  { post: post}})}
+                            pathname: '/menu/Menu', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
                         />
                     ),
-                    headerRight: () => (
-                        <ScreenHeaderBtn 
-                        icon={icons.refresh} 
-                        dimension="130%"
-                        handlePress={handleRefresh}
-                        />
-                    ),
+
                     headerTitle: ""
                 }}
             />
 
             <View style={{ flex: 1, padding: SIZES.medium }}>
                 <View style={styles.welcomeContainer}>
-                    <Text style={styles.userName}>Hello {global.currentUsersName}</Text>
+                    <Text style={styles.userName}>Hello {params.uName}</Text>
                     <Text style={styles.welcomeMessage}>Good luck with your goals today!</Text>
                 </View>
 
@@ -101,15 +98,22 @@ const Home = () => {
                             habit={item}
                             handleNavigate={() => router.push({
                                 pathname: `/habits/${item.habitId}`, 
-                                params: { post: item.habitId } })} 
+                                params: { post: item.habitId, uid: uid, uName: uName, handleRefresh }})} 
                             button={true}
+                            refresh={handleRefresh}
                         />
                         )))}
 
                     </ScrollView>
                 </View>
             </View>
-            <Footer icon={icons.plus} handleNavigate={() => router.push('habits/AddHabit')}/>
+            <Footer 
+                icon={icons.plus} 
+                handleNavigate={() => router.push({
+                    pathname: `/habits/AddHabit`,
+                    params: { uid: uid, uName: uName, handleRefresh }})}
+                refresh={handleRefresh} 
+            />
         </SafeAreaView>
     )
 }
