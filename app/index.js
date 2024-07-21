@@ -1,8 +1,8 @@
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
 
-import { COLORS } from '../constants';
+import { COLORS, icons} from "../constants";
 import styles from "./auth/auth.style";
 import useFetch from '../hook/useFetch'; 
 
@@ -12,7 +12,8 @@ const App = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [data, setData] = useState([]);
-
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passFocused, setPassFocused] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const error = false;
 
@@ -52,7 +53,7 @@ const App = () => {
       const loggedInUserId = loggedInUser.userId;
       const loggedInUserName = loggedInUser.name;
   
-      ////// remove remove remove
+      // remove remove remove
       global.currentUserId = loggedInUserId;
       global.currentUsersName = loggedInUser.name;
 
@@ -78,59 +79,75 @@ const App = () => {
             options={{
                 headerStyle: { backgroundColor: COLORS.lightWhite },
                 headerShadowVisible: false,
-                headerBackVisible: false,
                 headerTitle: ""
               }}
             />
             <>
                 <ScrollView showsVerticalScrollIndicator={false}> 
                  <View style={styles.pageContainer}>
-                  <View style={styles.container}>
-                    <Text style={styles.habitTracker}>HabiTrack</Text>
-                    <Text style={styles.title}>Login</Text>
+                  <View style={styles.titleContainer} >
+                    <Text style={styles.habi}>habi</Text>
+                    <Text style={styles.track}>T</Text>
+                    <Text style={styles.habi}>rack</Text>
                   </View>
 
                   <View>
-                    <View style={styles.inputContainer}>
+                  <View style={emailFocused ? styles.inputContainerFocused : styles.inputContainer}>
                       <View style={styles.inputWrapper}>
+                      <Image source={icons.mail} style={styles.icon} />
                         <TextInput
                           style={styles.userInput}
                           value={email}
                           placeholder='Email'
                           onChangeText={(text) => setEmail(text)}
+                          onFocus={() => setEmailFocused(true)}
+                          onBlur={() => setEmailFocused(false)}
                         />
                       </View>
                     </View>
                   </View>
 
                   <View>
-                    <View style={styles.inputContainer}>
+                  <View style={passFocused ? styles.inputContainerFocused : styles.inputContainer}>
                       <View style={styles.inputWrapper}>
+                      <Image source={icons.padlock} style={styles.icon} />
                         <TextInput
                           style={styles.userInput}
                           value={pass}
                           placeholder='Password'
                           onChangeText={(text) => setPass(text)}
+                          secureTextEntry={true}
+                          onFocus={() => setPassFocused(true)}
+                          onBlur={() => setPassFocused(false)}
                         />
                       </View>
                     </View>
                   </View>
 
-                  <View style={styles.inputContainer}>
-                    <View style={styles.buttonWrapper}>
-                      <TouchableOpacity onPress={handleLogin}>
-                        <Text style={styles.buttonText}>Login</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonWrapper}>
-                    <TouchableOpacity onPress={() => router.push({
-                      pathname: 'auth/SignUp',
-                      params: { handleRefresh }})}>
-                        <Text style={styles.buttonText}>Go to sign Up</Text>
+                  <View style={styles.forgottenContainer}>
+                    <View style={styles.forgottenWrapper}>
+                      <TouchableOpacity>
+                        <Text style={styles.forgottenText}>Forgotten password?</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
-                </View>
+
+                  <View>
+                      <TouchableOpacity onPress={handleLogin} style={styles.loginContainer}>
+                        <Text style={styles.buttonText}>Login</Text>
+                      </TouchableOpacity>
+                  </View>
+
+                    <View style={styles.signupWrapper}>
+                    <Text style={styles.signupText}>Dont have an account?</Text>
+                    <TouchableOpacity onPress={() => router.push({
+                      pathname: 'auth/SignUp',
+                      params: { handleRefresh }})}>
+                        <Text style={styles.signupText2}>Signup here</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
               </ScrollView>
             </>
     </SafeAreaView>

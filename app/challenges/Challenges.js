@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { View, ScrollView, SafeAreaView, Text, Image } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import styles from "./challenges.style";
 import { COLORS, icons, SIZES } from '../../constants';
@@ -30,6 +31,7 @@ const Challenges = () => {
     const router = useRouter();
     const post = params.post;
     const uName = params.uName;
+    const handleRefresh = params.handleRefresh;
 
     const [friends, setFriends] = useState([]);
     const [users, setUsers] = useState([]);
@@ -55,8 +57,6 @@ const Challenges = () => {
         },
 
     ];
-
-    const handleRefresh = params.handleRefresh;
 
 
     // handles the challenge creation oncee a user selects a friend
@@ -96,14 +96,16 @@ const Challenges = () => {
     
         
         //refreshes habit data on the home page after adding a challenge
-        handleRefresh;
+        .then(() => {
+            if (handleRefresh) {
+              handleRefresh;
+          }
 
         // Navigate to the Home screen with the updated user data
         router.push({
             pathname: `/home/Home`,
-            params: { post: post, uName: uName}
-        })
-    };
+            params: { post: post, uName: uName}})
+        })};
 
     const handleChallengeCardPress = (challenge) => {
         setSelectedChallenge(challenge);
@@ -144,17 +146,33 @@ const Challenges = () => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+            <LinearGradient
+                colors={[ '#2caf6e', 'transparent', 'transparent']}
+                style={{ flex: 1 }}
+              >
             <Stack.Screen 
                 options={{ 
-                    headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
+                    headerStyle: { 
+                        backgroundColor: '#2caf6e',
+                        shadowColor: '#000', 
+                        shadowOffset: { width: 0, height: 7 }, 
+                        shadowOpacity: 0.3,
+                        shadowRadius: 35
+                     },
+                    headerShadowVisible: true,
                     headerLeft: () => (
                         <ScreenHeaderBtn 
                         icon={icons.menu} 
-                        dimension="130%"
-                        handlePress={() => router.push({
-                            pathname: 'menu/Menu', 
-                            params:  { post: post}})}
+                        dimension="100%"
+                        handlePressMenu={() => router.push(`/menu/Menu/?post=${post}&uName=${uName}`)}
+                        handlePressFriends={() => router.push({
+                            pathname: '/friendship/Friends', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                        handlePressHome={() => router.push(`/home/Home/?post=${post}&uName=${uName}`)}
+                        handlePressChallenges={() => router.push({
+                            pathname: '/challenges/Challenges', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                            
                         />
                     ),
 
@@ -164,11 +182,19 @@ const Challenges = () => {
 
             <View style={{ flex: 1, padding: SIZES.medium }}>
             <View style={styles.pageContainer}>
+                <View style={styles.imageContainer}>
                     <Image
-                        source={icons.battlelarge}
+                        source={icons.habi1}
                         resizeMode='contain'
                         style={styles.iconImage}
                     />
+                     <Image
+                        source={icons.sword}
+                        resizeMode='contain'
+                        style={styles.iconImageSword}
+                    />
+
+                </View>
 
                 <View style={styles.welcomeContainer}>
                     <Text style={styles.welcomeMessage}>Select a challenge to test your friends!</Text>
@@ -209,7 +235,7 @@ const Challenges = () => {
                             <>
                         {/* renders the FriendCard component for each friend  */}
                         <View style={styles.header}>
-                            <Text style={styles.headerTitle}>Friends</Text>
+                            <Text style={styles.headerTitleFriends}>Friends</Text>
                         </View>
                         <ScrollView showsVerticalScrollIndicator={false}>
                         {filteredUsers.map((item) => (
@@ -225,7 +251,7 @@ const Challenges = () => {
 
                 </View>
             </View>
-
+        </LinearGradient>
         </SafeAreaView>
     )
 }

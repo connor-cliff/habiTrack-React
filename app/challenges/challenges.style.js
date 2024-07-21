@@ -12,7 +12,7 @@ pageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
 },
-    container: {
+  container: {
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -26,8 +26,9 @@ pageContainer: {
     flexDirection: "row",
   },
   habitContainer: {
-    marginTop: SIZES.medium,
-    height: "100%"
+    marginTop: 100,
+    height: "100%",
+
   },
   menuIcon: {
     width: "70%",
@@ -36,7 +37,7 @@ pageContainer: {
   },
   welcomeContainer: {
     width: "100%",
-    marginTop: 20
+    marginTop: 20,
 
   },
   userName: {
@@ -45,10 +46,8 @@ pageContainer: {
     color: COLORS.secondary,
   },
   welcomeMessage: {
-    fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    color: COLORS.primary,
-    marginTop: 2,
+    color: COLORS.secondary,
   },
   text : {
     fontFamily: FONT.bold,
@@ -62,6 +61,12 @@ pageContainer: {
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: SIZES.small,
+  },
+  headerTitleFriends: {
+    fontSize: SIZES.large,
+    fontFamily: FONT.medium,
+    color: COLORS.secondary,
+    marginBottom: 20
   },
   headerTitle: {
     fontSize: SIZES.large,
@@ -77,10 +82,21 @@ pageContainer: {
     marginTop: SIZES.medium,
     gap: SIZES.small,
   },
+  imageContainer: {
+    marginTop: 120,
+    height: 170,
+  },
   iconImage: {
-    tintColor: COLORS.primary,
-    height: 115,
-    width: 115
+    height: 150,
+    width: 150,
+    positon: "relative"
+  },
+  iconImageSword: {
+    height: 90,
+    width: 90,
+    bottom: 180,
+    left: 10,
+    postion: "absolute"
   },
 });
 

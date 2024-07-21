@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { ScreenHeaderBtn, FriendCard } from '../../components';
 import { COLORS, icons } from '../../constants';
@@ -26,7 +27,7 @@ const filterUsersByFriendship = (friends, users, post) => {
 
 const Friends = () => {
  // Get the "post" value from local search parameters using expo-router
-  const { post } = useLocalSearchParams();
+  const { post, uName } = useLocalSearchParams();
   const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +37,7 @@ const Friends = () => {
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [noUsersFound, setNoUsersFound] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const error = false;
 
 
@@ -138,26 +140,41 @@ const Friends = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+            <LinearGradient
+                  colors={[ '#2caf6e', 'transparent', 'transparent']}
+                  style={{ flex: 1 }}
+              >
             <Stack.Screen 
                 options={{ 
-                    headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
-                    headerTitle: "",
+                    headerStyle: { 
+                        backgroundColor: '#2caf6e',
+                        shadowColor: '#000', 
+                        shadowOffset: { width: 0, height: 7 }, 
+                        shadowOpacity: 0.3,
+                        shadowRadius: 35
+                     },
+                    headerShadowVisible: true,
                     headerLeft: () => (
-                    <ScreenHeaderBtn 
-                        icon={icons.left}
-                        dimension={"70%"}
-                        handlePress={() => router.push(`/menu/Menu/?post=${post}`)}
-                    />
-                  ),
+                        <ScreenHeaderBtn 
+                        icon={icons.menu} 
+                        dimension="100%"
+                        handlePressMenu={() => router.push(`/menu/Menu/?post=${post}&uName=${uName}`)}
+                        handlePressFriends={() => router.push({
+                            pathname: '/friendship/Friends', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                        handlePressHome={() => router.push(`/home/Home/?post=${post}&uName=${uName}`)}
+                        handlePressChallenges={() => router.push({
+                            pathname: '/challenges/Challenges', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                            
+                        />
+                    ),
 
-                  }}
+                    headerTitle: ""
+                }}
             />
             <>
               <View style={styles.pageContainer}>
-                  <View style={styles.container}>
-                    <Text style={styles.title}>Friends</Text>
-                  </View>
 
                   <View>
                     <View>
@@ -166,11 +183,13 @@ const Friends = () => {
                     
                     <View style={styles.searchContainer}>
                       <View style={styles.searchWrapper}>
-                        <TextInput
-                          style={styles.searchInput}
+                        <TextInput 
+                          style={searchFocused ? styles.searchInputFocused : styles.searchInput}
                           value={searchTerm}
                           onChangeText={(text) => setSearchTerm(text)}
                           placeholder='Search...'
+                          onFocus={() => setSearchFocused(true)}
+                          onBlur={() => setSearchFocused(false)}
                         />
                       </View>
 
@@ -213,7 +232,7 @@ const Friends = () => {
                 <View>
                   <View style={styles.friendContainer}>
                     <View>
-                      <Text style={styles.fieldName}>Friends list</Text>
+                      <Text style={styles.fieldName2}>Friends list</Text>
                     </View>
                       <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -246,6 +265,7 @@ const Friends = () => {
                 </View>
               </View>
             </>
+        </LinearGradient>
     </SafeAreaView>
   )
 }

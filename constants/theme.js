@@ -1,7 +1,7 @@
 
 
 const COLORS = {
-  primary: "#2BB276",
+  primary: "#28D8A1",
   secondary: "#1b1e2f",
   tertiary: "#6ea770",
 
@@ -12,7 +12,7 @@ const COLORS = {
 
   white: "#f4f9ff",
   input: "#fff",
-  lightWhite: "#EDF7FF",
+  lightWhite: "white",
 };
 
 
@@ -25,10 +25,12 @@ const FONT = {
 const SIZES = {
   xSmall: 10,
   small: 12,
+  msmall: 14,
   medium: 16,
   large: 20,
   xLarge: 22,
   xxLarge: 32,
+  xxxLarge: 60,
 };
 
 const SHADOWS = {

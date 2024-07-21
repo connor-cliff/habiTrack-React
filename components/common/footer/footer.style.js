@@ -4,17 +4,17 @@ import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: SIZES.small,
-    backgroundColor: "#FFF",
-    borderTopWidth: 2,
-    borderTopColor: COLORS.gray,  
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    width: "88%",
+    height: 70,
+    marginTop: 5,
+    marginBottom: 30,
+    marginLeft: 22,
+    borderRadius: SIZES.medium,
+    backgroundColor: COLORS.primary,
+
   },
   iconPosition: {
     flex: 1,
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
+
   },
   likeBtnImage: {
     width: "70%",
@@ -36,9 +37,8 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: SIZES.large,
-    color: COLORS.primary,
+    color: COLORS.input,
     fontFamily: FONT.bold,
-    padding: 15
   },
 });
 

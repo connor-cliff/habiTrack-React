@@ -70,15 +70,15 @@ useEffect(() => {
     }, [friends, users, post ]);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.input }}>
             <Stack.Screen 
                 options={{ 
-                    headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
+                    headerStyle: { backgroundColor: COLORS.primary },
+                    headerShadowVisible: true,
                     headerLeft: () => (
                         <ScreenHeaderBtn 
                         icon={icons.menu} 
-                        dimension="130%"
+                        dimension="100%"
                         handlePress={() => router.push({
                             pathname: 'menu/Menu', 
                             params:  { post: post}})}

@@ -95,9 +95,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   text : {
-    fontFamily: FONT.bold,
+
     fontSize: SIZES.xLarge,
-    color: COLORS.primary,
+    color: COLORS.secondary,
     marginTop: 10,
     textAlign: "center"
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   iconImage: {
-    tintColor: COLORS.primary,
+    tintColor: COLORS.input,
     height: 115,
     width: 115
   },

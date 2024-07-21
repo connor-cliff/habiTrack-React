@@ -12,6 +12,14 @@ import refresh from '../assets/icons/refresh.png'
 import userlarge from '../assets/icons/userlarge.png'
 import battlelarge from '../assets/icons/battlelarge.png'
 import battle from '../assets/icons/battle.png'
+import mail from '../assets/icons/mail.png'
+import padlock from '../assets/icons/padlock.png'
+import background from '../assets/icons/background.png'
+import down from '../assets/icons/down.png'
+import habi from '../assets/icons/habi.png'
+import habi1 from '../assets/icons/habi1.png'
+import sword from '../assets/icons/sword.png'
+
 
 export default {
   menu,
@@ -27,5 +35,12 @@ export default {
   refresh,
   userlarge,
   battle,
-  battlelarge
+  battlelarge,
+  mail,
+  padlock,
+  background,
+  down,
+  habi,
+  habi1,
+  sword
 };

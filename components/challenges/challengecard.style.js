@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: SIZES.medium,
     borderRadius: SIZES.small,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.input,
     ...SHADOWS.small,
     shadowColor: COLORS.secondary,
   },

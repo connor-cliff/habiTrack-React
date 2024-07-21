@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, FONT, SIZES } from "../../constants";
+import { COLORS, FONT, SHADOWS, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -10,10 +10,24 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
+  },  
+  titleContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 25
   },
-  habitTracker: {
+  habi: {
     fontFamily: FONT.bold,
-    fontSize: SIZES.xxLarge,
+    fontSize: SIZES.xxxLarge,
+    color: COLORS.secondary,
+    marginTop: 2,
+    margineBottom: 2
+  },
+  track: {
+    fontFamily: FONT.bold,
+    fontSize: SIZES.xxxLarge,
     color: COLORS.primary,
     marginTop: 2,
     margineBottom: 2
@@ -28,15 +42,51 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     height: 50,
-    marginTop: 15
+    marginTop: 15,
+    borderColor: COLORS.gray2,
+    borderWidth: 2,
+    borderRadius: SIZES.medium,
+  },
+  loginContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 50,
+    marginTop: 5,
+    borderWidth: 2,
+    borderRadius: SIZES.medium,
+    backgroundColor: COLORS.secondary,
+  },
+  signupContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 50,
+    marginTop: 15,
+    borderWidth: 2,
+    borderRadius: SIZES.medium,
+    backgroundColor: COLORS.secondary,
+  },
+  inputContainerFocused: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 50,
+    marginTop: 15,
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+    borderRadius: SIZES.medium,
   },
   inputWrapper: {
+    flexDirection: "row",
     flex: 1,
     backgroundColor: COLORS.input,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.medium,
     height: "100%",
+    paddingHorizontal: SIZES.medium,
+
   },
   buttonWrapper: {
     flex: 1,
@@ -48,7 +98,29 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.xLarge,
     height: "70%",
   },
+  
+  forgottenContainer: {
+    flexDirection: "row",
+    marginLeft: 190,
+    height: 30,
+    width: 150,
+    marginTop: 10,
+
+  },
+  forgottenWrapper: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    height: "70%",
+
+  },
+  forgottenText: {
+    color: COLORS.primary,
+    fontSize: SIZES.medium,
+  },
+
   buttonText: {
+    fontSize: SIZES.medium,
     color: "#FFF"
   },
   button : {
@@ -58,7 +130,35 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     width: "100%",
     height: "100%",
-    paddingHorizontal: SIZES.medium,
+    paddingHorizontal: 10,
+    borderWidth: 0,
+    outlineWidth: 0, 
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    tintColor: COLORS.gray,
+  },
+  signupWrapper: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginTop: 210,
+  },
+  loginWrapper: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginTop: 170,
+  },
+  signupText: {
+    fontSize: SIZES.medium,
+    color: COLORS.secondary,
+    marginRight: 5
+  },
+  signupText2: {
+    fontSize: SIZES.medium,
+    color: COLORS.primary
   },
 });
 

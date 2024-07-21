@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Text, Image } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 
 import { MenuBtn, ScreenHeaderBtn } from "../../components";
@@ -37,6 +37,13 @@ const Menu = () => {
                 ),}}
             />
             <View style={styles.wholeMenu}>
+                <View style={styles.titleContainer} >
+                    <Text style={styles.habi}>habi</Text>
+                    <Text style={styles.track}>T</Text>
+                    <Text style={styles.habi}>rack</Text>
+                </View>
+
+                <View style={styles.menuButtons}>
                 <View style={styles.container}>
                     <MenuBtn  
                         icon={icons.home}
@@ -64,7 +71,7 @@ const Menu = () => {
                         label="Friends"
                         handleNavigate={() => router.push({
                             pathname: 'friendship/Friends', 
-                            params: { post: post }})}
+                            params: { uid: post, uName: uName, handleRefresh }})}
                         />
                 </View>
                 <View style={styles.container}>
@@ -73,16 +80,28 @@ const Menu = () => {
                         label="Challenges"
                         handleNavigate={() => router.push({
                             pathname: '/challenges/Challenges', 
-                            params: { post: post, uName: uName, handleRefresh }})}
+                            params: { post: post, uName: uName, handleRefresh: handleRefresh }})}
                         />
                 </View>
                 <View style={styles.container}>
-                    <MenuBtn  
-                        icon={icons.logout}
-                        label="Logout"
-                        handleNavigate={() => router.push('/')}
-                        />
+                    <View style={styles.logoutContainer}>
+                        <MenuBtn  
+                            icon={icons.logout}
+                            label="Logout"
+                            handleNavigate={() => router.push({
+                        pathname: '/',
+                        params: { handleRefresh }})}
+                            />
+                    </View>
+                 </View>
                 </View>
+            </View>
+            <View style={styles.habiContainer}>
+                <Image
+                    source={icons.habi}
+                    resizeMode='contain'
+                    style={styles.habiChar}
+                />
             </View>
         </SafeAreaView>
     )

@@ -43,6 +43,17 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingHorizontal: SIZES.medium,
   },
+  searchInputFocused: {
+    backgroundColor: COLORS.input,
+    borderRadius: SIZES.medium,
+    fontFamily: FONT.regular,
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: SIZES.medium,
+    borderColor: COLORS.primary,
+    borderWidth: 2,
+    borderRadius: SIZES.medium,
+  },
   searchBtn: {
     width: 50,
     height: "100%",
@@ -59,14 +70,20 @@ const styles = StyleSheet.create({
   fieldName: {
     fontFamily: FONT.regular,
     fontSize: SIZES.large,
-    color: COLORS.secondary,
+    color: COLORS.input,
     marginTop: 15,
     marginBottom: 10,
   },
+  fieldName2: {
+    fontFamily: FONT.regular,
+    fontSize: SIZES.large,
+    color: COLORS.secondary,
+
+    marginBottom: 10,
+  },
   text : {
-    fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    color: COLORS.primary,
+    color: COLORS.secondary,
     marginTop: 10,
     textAlign: "center"
   },

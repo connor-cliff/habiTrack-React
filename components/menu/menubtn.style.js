@@ -6,8 +6,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: SIZES.small,
-    backgroundColor: COLORS.lightWhite,
+    backgroundColor: COLORS.input,
     flexDirection: "row",
+
+  },
+  logoutContainer: {
+  borderTopWidth: 2,
+  borderTopColor: COLORS.secondary,
+  flex: 1,
+  padding: SIZES.small,
+  backgroundColor: COLORS.input,
+  flexDirection: "row",
 
   },
   menuOption: {
@@ -22,7 +31,8 @@ const styles = StyleSheet.create({
   icon: {
     width: 25,
     height: 25,
-    marginRight: 12
+    marginRight: 12,
+    color: COLORS.primary,
   }
 });
 

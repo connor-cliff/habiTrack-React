@@ -5,7 +5,8 @@ import { COLORS, FONT, SIZES } from "../../constants";
 const styles = StyleSheet.create({
   pageContainer: {
     width: "95%",
-    paddingLeft: 25,
+    paddingLeft: 22,
+    marginBottom: 20
   },
   container: {
     width: "100%",
@@ -13,8 +14,8 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    color: COLORS.primary,
-    marginTop: 2,
+    color: COLORS.input,
+    marginTop: 20,
     margineBottom: 2,
   },
   fieldName: {
@@ -48,31 +49,49 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     width: "100%",
     height: "100%",
+    borderRadius: SIZES.medium,
     paddingHorizontal: SIZES.medium,
   },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    height: 50,
+    height: 95,
   },
   buttonWrapper: {
     flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
+    width: 120,
+    height: 60,
     backgroundColor: COLORS.red,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: SIZES.xSmall,
+    borderRadius: SIZES.medium,
     height: "70%",
   },
+
   buttonText: {
-    color: COLORS.lightWhite,
-    marginRight: 5,
-    marginLeft: 5,
+    fontSize: SIZES.large,
+    color: COLORS.input,
+    fontFamily: FONT.bold,
   },
-  buttonText: {
-    color: COLORS.lightWhite,
+  likeBtn: {
+    width: 120,
+    height: 60,
+    borderColor: COLORS.red,
+    borderRadius: SIZES.medium,
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  likeBtnImage: {
+    width: "70%",
+    height: "70%",
+    tintColor: COLORS.primary,
+  },
+  btnText: {
+    fontSize: SIZES.large,
+    color: COLORS.input,
+    fontFamily: FONT.bold,
   },
 });
 

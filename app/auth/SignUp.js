@@ -1,4 +1,4 @@
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
@@ -12,6 +12,9 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [nameFocused, setNameFocused] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passFocused, setPassFocused] = useState(false);
 
   const handleSignup = () => {
 
@@ -38,6 +41,24 @@ const SignUp = () => {
     router.push('/')
 };
 
+  // Updates the user information after signup 
+  const handleRefresh = () => {
+    setRefreshing(true);
+
+    fetch(`http://localhost:8080/api/v1/user`)
+      .then(res => res.json())
+      .then(result => {
+        
+        setData(result)
+
+        setRefreshing(false);
+      })
+      .catch(error => {
+        console.error("Error refreshing data:", error);
+        setRefreshing(false);
+      });
+  };
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -46,70 +67,75 @@ const SignUp = () => {
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
                     headerTitle: "",
-                    headerLeft: () => (
-                    <ScreenHeaderBtn 
-                        icon={icons.left}
-                        dimension={"70%"}
-                        handlePress={() => router.back()}
-                    />
-                ),}}
+                    }}
             />
             <>
                 <ScrollView showsVerticalScrollIndicator={false}> 
-                 <View style={styles.pageContainer}>
-                  <View style={styles.container}>
-                    <Text style={styles.habitTracker}>HabiTrack</Text>
-                    <Text style={styles.title}>Sign Up</Text>
+                <View style={styles.pageContainer}>
+                  <View style={styles.titleContainer} >
+                    <Text style={styles.habi}>habi</Text>
+                    <Text style={styles.track}>T</Text>
+                    <Text style={styles.habi}>rack</Text>
                   </View>
-
-                  <View>
-                    <View style={styles.inputContainer}>
+                  
+                  <View style={nameFocused ? styles.inputContainerFocused : styles.inputContainer}>
                       <View style={styles.inputWrapper}>
+                      <Image source={icons.user} style={styles.icon} />
                         <TextInput
                           style={styles.userInput}
                           value={name}
-                          placeholder='Name'
+                          placeholder='Username'
                           onChangeText={(text) => setName(text)}
+                          onFocus={() => setNameFocused(true)}
+                          onBlur={() => setNameFocused(false)}
                         />
                       </View>
                     </View>
-                  </View>
 
-                  <View>
-                    <View style={styles.inputContainer}>
+                  <View style={emailFocused ? styles.inputContainerFocused : styles.inputContainer}>
                       <View style={styles.inputWrapper}>
+                      <Image source={icons.mail} style={styles.icon} />
                         <TextInput
                           style={styles.userInput}
                           value={email}
                           placeholder='Email'
                           onChangeText={(text) => setEmail(text)}
+                          onFocus={() => setEmailFocused(true)}
+                          onBlur={() => setEmailFocused(false)}
+                        />
+                      </View>
+                    </View>
+
+                    <View>
+                  <View style={passFocused ? styles.inputContainerFocused : styles.inputContainer}>
+                      <View style={styles.inputWrapper}>
+                      <Image source={icons.padlock} style={styles.icon} />
+                        <TextInput
+                          style={styles.userInput}
+                          value={pass}
+                          placeholder='Password'
+                          onChangeText={(text) => setPass(text)}
+                          secureTextEntry={true}
+                          onFocus={() => setPassFocused(true)}
+                          onBlur={() => setPassFocused(false)}
                         />
                       </View>
                     </View>
                   </View>
 
                   <View>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.inputWrapper}>
-                        <TextInput
-                          style={styles.userInput}
-                          value={pass}
-                          placeholder='Password'
-                          onChangeText={(text) => setPass(text)}
-                        />
-                      </View>
-                    </View>
+                      <TouchableOpacity onPress={handleSignup} style={styles.signupContainer}>
+                        <Text style={styles.buttonText}>Signup</Text>
+                      </TouchableOpacity>
                   </View>
 
-                  <View style={styles.inputContainer}>
-                    <View style={styles.buttonWrapper}>
-                    <TouchableOpacity onPress={handleSignup}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonWrapper}>
-                      <TouchableOpacity onPress={() => router.push('/')}>
-                        <Text style={styles.buttonText}>Go to login</Text>
+                  <View style={styles.loginWrapper}>
+                   <Text style={styles.signupText}>Already have an account?</Text>
+                  <View >
+                      <TouchableOpacity onPress={() => router.push({
+                      pathname: '/',
+                      params: { handleRefresh }})}>
+                        <Text style={styles.signupText2}>Login here</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

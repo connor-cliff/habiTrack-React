@@ -1,6 +1,7 @@
 import { Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams  } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { ScreenHeaderBtn, Footer } from '../../components';
 import { COLORS, icons } from '../../constants';
@@ -16,6 +17,7 @@ const EditHabit = () => {
   const { data } = useFetch('habit', { habitId: params.id },)
   const uid = params.uid;
   const uName = params.uName;
+  
 
   const [habit, setHabit] = useState({});
   const [name, setName] = useState('');
@@ -110,18 +112,37 @@ const handleSave = () => {
   
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+            <LinearGradient
+                  colors={[ '#2caf6e', 'transparent', 'transparent']}
+                  style={{ flex: 1 }}
+              >
             <Stack.Screen 
                 options={{ 
-                    headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
-                    headerTitle: "",
+                    headerStyle: { 
+                        backgroundColor: '#2caf6e',
+                        shadowColor: '#000', 
+                        shadowOffset: { width: 0, height: 7 }, 
+                        shadowOpacity: 0.3,
+                        shadowRadius: 35
+                     },
+                    headerShadowVisible: true,
                     headerLeft: () => (
-                    <ScreenHeaderBtn 
-                        icon={icons.left}
-                        dimension={"70%"}
-                        handlePress={() => router.back()}
-                    />
-                ),
+                        <ScreenHeaderBtn 
+                        icon={icons.chevronLeft} 
+                        dimension="100%"
+                        handlePressMenu={() => router.back()}
+                        handlePressFriends={() => router.push({
+                            pathname: '/friendship/Friends', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                        handlePressHome={() => router.push(`/home/Home/?post=${post}&uName=${uName}`)}
+                        handlePressChallenges={() => router.push({
+                            pathname: '/challenges/Challenges', 
+                            params:  { post: uid, uName: uName, handleRefresh}})}
+                            
+                        />
+                    ),
+
+                    headerTitle: ""
                 }}
             />
             <>
@@ -201,7 +222,6 @@ const handleSave = () => {
                   
                   <View>
                   <View>
-                      <Text style={styles.fieldName}>Delete habit</Text>
                     </View>
                     <View style={styles.buttonContainer}>
                       <View style={styles.buttonWrapper}>
@@ -209,14 +229,19 @@ const handleSave = () => {
                           handleDelete();
                           handleRefresh();
                         }}>
-                        <Text style={styles.buttonText}>DELETE</Text>
+                        <Text style={styles.buttonText}>Delete</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                   </View>    
                 </View>
-              <Footer icon={"Complete"} handleNavigate={handleSave}/>
+              <Footer 
+              icon={"Update"} 
+              handleNavigate={handleSave}
+              handleRefresh={handleRefresh}
+              />
             </>
+            </LinearGradient>
     </SafeAreaView>
   )
 }

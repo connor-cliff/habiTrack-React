@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, SHADOWS, SIZES } from "../../constants";
+import { COLORS, SHADOWS, FONT, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   streak: {
     fontSize: SIZES.small + 2,
     fontFamily: "DMRegular",
+    fontFamily: FONT.bold,
     color: COLORS.primary,
     marginTop: 3,
     textTransform: "capitalize",
