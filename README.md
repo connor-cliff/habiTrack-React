@@ -18,7 +18,7 @@ habiTrack is a demo habit tracker which aims to help users track and improve the
 
 ### Requirements
 1. You must first install Expo, which can be found [here](https://docs.expo.dev/get-started/create-a-project/).
-2. Dowwnload and set up the business logic [here](https://github.com/connor-cliff/habiTrack).
+2. Download and set up the business logic [here](https://github.com/connor-cliff/habiTrack).
 3. Ensure SQL Server is running.
 
 ### Instructions
